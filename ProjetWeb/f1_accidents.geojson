@@ -1,0 +1,705 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "pilot": "Cameron Earl",
+        "date": "1952-06-18",
+        "circuit": "MIRA Circuit",
+        "description": "Accident lors d'essais ERA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.4577, 52.5608]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "pilot": "Charles Pozzi",
+        "date": "1946-05-19",
+        "circuit": "Saint-Cloud",
+        "description": "Accident lors de la Coupe de la Résistance"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2101, 48.8414]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "pilot": "Enzo Platè",
+        "date": "1953-02-15",
+        "circuit": "Buenos Aires",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-58.4544, -34.6037]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "pilot": "Mario Alborghetti",
+        "date": "1955-04-11",
+        "circuit": "Pau",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.3700, 43.2951]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "pilot": "Alberto Ascari",
+        "date": "1955-05-26",
+        "circuit": "Monza",
+        "description": "Accident lors d'essais privés"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2845, 45.6156]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "pilot": "Bill Vukovich",
+        "date": "1955-05-30",
+        "circuit": "Indianapolis",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "pilot": "Manny Ayulo",
+        "date": "1955-05-16",
+        "circuit": "Indianapolis",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "pilot": "Eugenio Castellotti",
+        "date": "1957-03-14",
+        "circuit": "Modène",
+        "description": "Accident lors d'essais privés"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.9254, 44.6471]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 9,
+        "pilot": "Keith Andrews",
+        "date": "1957-05-15",
+        "circuit": "Indianapolis",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 10,
+        "pilot": "Pat O'Connor",
+        "date": "1958-05-30",
+        "circuit": "Indianapolis",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 11,
+        "pilot": "Luigi Musso",
+        "date": "1958-07-06",
+        "circuit": "Reims",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.0207, 49.2583]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 12,
+        "pilot": "Peter Collins",
+        "date": "1958-08-03",
+        "circuit": "Nürburgring",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.9470, 50.3356]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 13,
+        "pilot": "Stuart Lewis-Evans",
+        "date": "1958-10-19",
+        "circuit": "Ain-Diab",
+        "description": "Accident en course, brûlures"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.6900, 33.5731]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 14,
+        "pilot": "Jerry Unser",
+        "date": "1959-05-17",
+        "circuit": "Indianapolis",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 15,
+        "pilot": "Bob Cortner",
+        "date": "1959-05-19",
+        "circuit": "Indianapolis",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 16,
+        "pilot": "Jean Behra",
+        "date": "1959-08-01",
+        "circuit": "AVUS",
+        "description": "Accident en course annexe"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.2700, 52.4830]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 17,
+        "pilot": "Chris Bristow",
+        "date": "1960-06-19",
+        "circuit": "Spa-Francorchamps",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.9714, 50.4372]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 18,
+        "pilot": "Alan Stacey",
+        "date": "1960-06-19",
+        "circuit": "Spa-Francorchamps",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.9714, 50.4372]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 19,
+        "pilot": "Harry Schell",
+        "date": "1960-05-13",
+        "circuit": "Silverstone",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.0147, 52.0733]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 20,
+        "pilot": "Shane Summers",
+        "date": "1961-06-01",
+        "circuit": "Brands Hatch",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.2615, 51.3559]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 21,
+        "pilot": "Wolfgang von Trips",
+        "date": "1961-09-10",
+        "circuit": "Monza",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2845, 45.6156]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 22,
+        "pilot": "Ricardo Rodriguez",
+        "date": "1962-11-01",
+        "circuit": "Mexico",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-99.0907, 19.4049]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 23,
+        "pilot": "Gary Hocking",
+        "date": "1962-12-22",
+        "circuit": "East London",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [27.9116, -33.0292]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 24,
+        "pilot": "John Taylor",
+        "date": "1966-08-07",
+        "circuit": "Nürburgring",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.9470, 50.3356]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 25,
+        "pilot": "Lorenzo Bandini",
+        "date": "1967-05-07",
+        "circuit": "Monaco",
+        "description": "Accident chicane du port"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4225, 43.7347]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 26,
+        "pilot": "Bob Anderson",
+        "date": "1967-08-27",
+        "circuit": "Silverstone",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.0147, 52.0733]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 27,
+        "pilot": "Jim Clark",
+        "date": "1968-04-07",
+        "circuit": "Hockenheim",
+        "description": "Accident en F2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.5705, 49.3278]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 28,
+        "pilot": "Mike Spence",
+        "date": "1968-05-07",
+        "circuit": "Indianapolis",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2366, 39.7955]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 29,
+        "pilot": "Ludovico Scarfiotti",
+        "date": "1968-06-08",
+        "circuit": "Rossfeld",
+        "description": "Accident en course de côte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.0500, 47.6333]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 30,
+        "pilot": "Jo Schlesser",
+        "date": "1968-07-07",
+        "circuit": "Rouen-les-Essarts",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.0667, 49.3333]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 31,
+        "pilot": "Gerhard Mitter",
+        "date": "1969-08-01",
+        "circuit": "Nürburgring",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.9470, 50.3356]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 32,
+        "pilot": "Martin Brain",
+        "date": "1969-05-23",
+        "circuit": "Silverstone",
+        "description": "Accident en F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.0147, 52.0733]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 33,
+        "pilot": "Paul Hawkins",
+        "date": "1969-05-26",
+        "circuit": "Oulton Park",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.6167, 53.1833]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 34,
+        "pilot": "Piers Courage",
+        "date": "1970-06-21",
+        "circuit": "Zandvoort",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.5446, 52.3888]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 35,
+        "pilot": "Bruce McLaren",
+        "date": "1970-06-02",
+        "circuit": "Goodwood",
+        "description": "Accident lors d'essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.7559, 50.8594]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 36,
+        "pilot": "Jochen Rindt",
+        "date": "1970-09-05",
+        "circuit": "Monza",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2845, 45.6156]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 37,
+        "pilot": "Roger Williamson",
+        "date": "1973-07-29",
+        "circuit": "Zandvoort",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.5446, 52.3888]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 38,
+        "pilot": "François Cevert",
+        "date": "1973-10-06",
+        "circuit": "Watkins Glen",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-76.9277, 42.3369]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 39,
+        "pilot": "Peter Revson",
+        "date": "1974-03-22",
+        "circuit": "Kyalami",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.0747, -26.0243]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 40,
+        "pilot": "Helmuth Koinigg",
+        "date": "1974-10-06",
+        "circuit": "Watkins Glen",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-76.9277, 42.3369]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 41,
+        "pilot": "Mark Donohue",
+        "date": "1975-08-19",
+        "circuit": "Österreichring",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.7647, 47.2197]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 42,
+        "pilot": "Tom Pryce",
+        "date": "1977-03-05",
+        "circuit": "Kyalami",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.0747, -26.0243]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 43,
+        "pilot": "Ronnie Peterson",
+        "date": "1978-09-10",
+        "circuit": "Monza",
+        "description": "Accident au départ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2845, 45.6156]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 44,
+        "pilot": "Patrick Depailler",
+        "date": "1980-08-01",
+        "circuit": "Hockenheim",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.5705, 49.3278]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 45,
+        "pilot": "Gilles Villeneuve",
+        "date": "1982-05-08",
+        "circuit": "Zolder",
+        "description": "Accident lors des qualifications"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.2594, 50.9894]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 46,
+        "pilot": "Riccardo Paletti",
+        "date": "1982-06-13",
+        "circuit": "Montreal",
+        "description": "Accident au départ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.5228, 45.5017]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 47,
+        "pilot": "Elio de Angelis",
+        "date": "1986-05-15",
+        "circuit": "Paul Ricard",
+        "description": "Accident lors des essais"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.7913, 43.2506]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 48,
+        "pilot": "Roland Ratzenberger",
+        "date": "1994-04-30",
+        "circuit": "Imola",
+        "description": "Accident lors des qualifications"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.7167, 44.3444]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 49,
+        "pilot": "Ayrton Senna",
+        "date": "1994-05-01",
+        "circuit": "Imola",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.7167, 44.3444]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 50,
+        "pilot": "Jules Bianchi",
+        "date": "2014-10-05",
+        "circuit": "Suzuka",
+        "description": "Accident en course"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [136.5407, 34.8431]
+      }
+    }
+  ]
+}
