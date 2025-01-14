@@ -45,10 +45,15 @@ window.onload = async () => {
 
     let response_2 = await fetch ("f1-locations.geojson");
     let data_2 = await response_2.json();
-
     console.log(data_2);
 
-
+    let response_3 = await fetch ("accidents.geojson");
+    let data_3 = await response_3.json();
+    console.log(data_2);
+    
+    let response_4 = await fetch ("risk-zones.geojson");
+    let data_4 = await response_4.json();
+    console.log(data_2);
     //reload the pages function of selector
     let select = document.getElementById("cir_f1");
     select.onchange = e => {
