@@ -4,7 +4,7 @@ function createLayer(data, selectedCircuit = null) {
     return L.geoJSON(data, {
         filter: function(feature) {
             if (!selectedCircuit) return true;
-            return feature.properties.name === selectedCircuit;
+            return feature.properties.Name === selectedCircuit;
         },
         style: function(feature) {
             return {
@@ -18,7 +18,7 @@ function createLayer(data, selectedCircuit = null) {
         onEachFeature: function(feature, layer) {
             const popupContent = `
                 <div class="circuit-popup">
-                    <h3>${feature.properties.name}</h3>
+                    <h3>${feature.properties.Name}</h3>
                     <p>Length: ${feature.properties.length || 'N/A'}</p>
                 </div>
             `;
@@ -56,8 +56,8 @@ function createAccidentMarker(feature, latlng) {
         opacity: 1,
         fillOpacity: 0.8
     }).bindPopup(`
-        <strong>Détails de l'accident</strong><br>
-        ${feature.properties.description || 'Pas de description disponible'}
+        <strong>Accident Details</strong><br>
+        ${feature.properties.description || 'No description available'}
     `);
 }
 
@@ -69,6 +69,22 @@ function getRiskZoneStyle() {
         color: '#c92a2a',
         fillOpacity: 0.35
     };
+}
+
+function populateCircuitSelector(circuits) {
+    const select = document.getElementById("cir_f1");
+    select.innerHTML = '<option value="">Sélectionnez un circuit</option>';
+
+    const circuitNames = circuits.features
+        .map(feature => feature.properties.Name)  // Changed from 'name' to 'Name'
+        .sort();
+
+    circuitNames.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+    });
 }
 
 let accidentsLayer = null;
@@ -87,7 +103,6 @@ window.onload = async () => {
     }).addTo(map);
 
     try {
-        // Chargement des données GeoJSON
         const [circuitsResponse, accidentsResponse, riskZonesResponse] = await Promise.all([
             fetch("f1-circuits.geojson"),
             fetch("accidents.geojson"),
@@ -98,7 +113,8 @@ window.onload = async () => {
         const accidentsData = await accidentsResponse.json();
         const riskZonesData = await riskZonesResponse.json();
 
-        // Initialisation des couches
+        populateCircuitSelector(circuitsData);
+
         circuitsLayer = createLayer(circuitsData).addTo(map);
 
         accidentsLayer = L.geoJSON(accidentsData, {
@@ -109,13 +125,12 @@ window.onload = async () => {
             style: getRiskZoneStyle,
             onEachFeature: (feature, layer) => {
                 layer.bindPopup(`
-                    <strong>Zone à risque</strong><br>
-                    ${feature.properties.description || 'Zone à haut risque'}
+                    <strong>Risk Zone</strong><br>
+                    ${feature.properties.description || 'High-risk area'}
                 `);
             }
         }).addTo(map);
 
-        // Gestion de la sélection des circuits
         let select = document.getElementById("cir_f1");
         select.onchange = e => {
             const selectedCircuit = e.target.value;
@@ -143,7 +158,6 @@ window.onload = async () => {
 
             if (accidentsLayer && riskZonesLayer) {
                 const circuitBounds = circuitsLayer.getBounds();
-
                 accidentsLayer.eachLayer(layer => {
                     const isNearCircuit = circuitBounds.contains(layer.getLatLng());
                     layer.getElement().style.transition = 'opacity 0.5s';
@@ -159,7 +173,7 @@ window.onload = async () => {
         };
 
     } catch (error) {
-        console.error("Erreur lors du chargement des données GeoJSON:", error);
-        alert("Erreur lors du chargement des données de la carte. Veuillez réessayer plus tard.");
+        console.error("Error loading GeoJSON data:", error);
+        alert("Error loading map data. Please try again later");
     }
 };
