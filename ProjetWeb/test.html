@@ -2,25 +2,44 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mob Track</title>
     <link rel="icon" href="data:,">
-    <!-- add leaflet CSS here -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <style>
-        #map { width: 1200px; height: 620px; }
-    </style>
-    <!-- add leaflet JavaScript here -->
+    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="MobTrack.js"></script>
 </head>
 <body>
-<div id="map"></div>
-<div>
-    <label for="cir_f1">Circuits F1 :</label>
-    <select id="cir_f1">
-        <option value="">Sélectionnez un circuit</option>
-    </select>
-</div>
+<header>
+    <h1>Mob Track</h1>
+    <p class="authors">Projet réalisé par : Malcom B. & Isabelle Z.</p>
+</header>
 
+<main>
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div class="controls-container">
+        <div class="control-group">
+            <label for="cir_f1">Circuits F1 :</label>
+            <select id="cir_f1">
+                <option value="">Sélectionnez un circuit</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="risk-filter">Niveau de risque :</label>
+            <select id="risk-filter">
+                <option value="all">Tous les circuits</option>
+                <option value="low">Risque faible (0 accident)</option>
+                <option value="moderate">Risque modéré (1 accident)</option>
+                <option value="high">Risque élevé (2 accidents)</option>
+                <option value="extreme">Risque extrême (3+ accidents)</option>
+            </select>
+        </div>
+    </div>
+</main>
 </body>
 </html>
