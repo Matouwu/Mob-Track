@@ -1,6 +1,6 @@
 "use strict";
 //Toutes les données sont récupérées depuis wikipédia et sont donc libre d'accès, la gestion des circuits quand à elle est disponible également librement sur github.
-// Meilleurs temps à ce jour sur les circuits du fichier geojson.
+// Meilleurs temps à ce jour sur les circuits du fichier geojson ( FONCTION FUTURE TAB AVEC MEILLEURS TEMPS).
 const bestTimes = [
     { circuit: "Albert Park Circuit", time: "1:20.235", pilot: "Charles Leclerc", car: "Ferrari", session: "Course", year: 2022 },
     { circuit: "Bahrain International Circuit", time: "1:31.447", pilot: "Pedro de la Rosa", car: "McLaren", session: "Course", year: 2005 },
@@ -22,7 +22,7 @@ const bestTimes = [
     { circuit: "Yas Marina Circuit", time: "1:39.283", pilot: "Lewis Hamilton", car: "Mercedes", session: "Course", year: 2019 }
 ];
 
-// Ajout des pays liés aux circuits pour filtre de pays.
+// Ajout des pays liés aux circuits pour filtre de pays. ( FONCTION FUTURE ) 
 const countryMapping = {
     "Albert Park Circuit": "Australie",
     "Bahrain International Circuit": "Bahreïn",
