@@ -13,31 +13,60 @@
 <body>
 <header>
     <h1>Mob Track</h1>
-    <p class="authors">Projet réalisé par : Malcom B. & Isabelle Z.</p>
+    <p class="authors">Projet réalisé par : Malcom & Isabelle.</p>
 </header>
-
 <main>
-    <div class="map-container">
-        <div id="map"></div>
-    </div>
+    <div class="content-wrapper">
+        <div class="map-section">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
 
-    <div class="controls-container">
-        <div class="control-group">
-            <label for="cir_f1">Circuits F1 :</label>
-            <select id="cir_f1">
-                <option value="">Sélectionnez un circuit</option>
-            </select>
+            <div class="pilots-section">
+                <h2>Pilotes impliqués dans des accidents</h2>
+                <div id="pilots-grid" class="pilots-grid">
+                    <!-- Les pilotes seront ajoutés dynamiquement ici -->
+                </div>
+            </div>
+
         </div>
 
-        <div class="control-group">
-            <label for="risk-filter">Niveau de risque :</label>
-            <select id="risk-filter">
-                <option value="all">Tous les circuits</option>
-                <option value="low">Risque faible (0 accident)</option>
-                <option value="moderate">Risque modéré (1 accident)</option>
-                <option value="high">Risque élevé (2 accidents)</option>
-                <option value="extreme">Risque extrême (3+ accidents)</option>
-            </select>
+        <div class="controls-container">
+            <div class="control-group">
+                <label for="cir_f1">Circuits F1 :</label>
+                <select id="cir_f1">
+                    <option value="">Sélectionnez un circuit</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="risk-filter">Niveau de risque :</label>
+                <select id="risk-filter">
+                    <option value="all">Tous les circuits</option>
+                    <option value="low">Risque faible (0 accident)</option>
+                    <option value="moderate">Risque modéré (1 accident)</option>
+                    <option value="high">Risque élevé (2 accidents)</option>
+                    <option value="extreme">Risque extrême (3+ accidents)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="session-filter">Type de session :</label>
+                <select id="session-filter">
+                    <option value="all">Toutes les sessions</option>
+                    <option value="Course">Course</option>
+                    <option value="Essais">Essais</option>
+                    <option value="Qualifications">Qualifications</option>
+                    <option value="Test">Test</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="country-filter">Pays :</label>
+                <select id="country-filter">
+                    <option value="all">Tous les pays</option>
+                </select>
+            </div>
         </div>
     </div>
 </main>
