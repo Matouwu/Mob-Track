@@ -1,0 +1,49 @@
+body{
+    font-family: Arial;
+    width: 1400px;
+    background-color: #220101;
+    margin: auto;
+    margin-top: 3px;
+    max-width: 80em;
+}
+
+header {
+    background-color: white;
+    height: 100px;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+}
+a img {
+    height: 130px;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: auto;
+}
+
+/*============================ Inside ===============================*/
+
+#map {
+    width: 1000px;
+    height: 620px;
+    padding-top: 20px;
+}
+
+.menu{
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: rgba(124, 60, 60, 0.87);
+}
+div h3{
+    text-align: center;
+    color: #220101;
+}
+div div{
+    text-align: left;
+    padding: 15px;
+}
