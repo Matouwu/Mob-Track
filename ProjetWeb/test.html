@@ -12,9 +12,11 @@
 </head>
 <body>
 <header>
-    <h1>Mob Track</h1>
-    <p class="authors">Projet réalisé par : Malcom & Isabelle.</p>
-</header>
+    <a href="test.html">
+        <img src="Logo%20MobTrack.png" alt="Mob Track">
+    </a>
+    <p class="authors">Projet réalisé par : Malcom B.</p </header>
+
 <main>
     <div class="content-wrapper">
         <div class="map-section">
@@ -22,22 +24,61 @@
                 <div id="map"></div>
             </div>
 
+            <div class="stats-section">
+                <h2>Statistiques des accidents</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total des accidents</h3>
+                        <p id="total-accidents">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Circuit le plus dangereux</h3>
+                        <p id="most-dangerous-circuit">-</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Année la plus accidentée</h3>
+                        <p id="most-dangerous-year">-</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Type de session le plus risqué</h3>
+                        <p id="most-dangerous-session">-</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="pilots-section">
                 <h2>Pilotes impliqués dans des accidents</h2>
+                <div class="filters">
+                    <select id="year-filter">
+                        <option value="all">Toutes les années</option>
+                    </select>
+                    <select id="session-filter">
+                        <option value="all">Tous types de sessions</option>
+                    </select>
+                </div>
                 <div id="pilots-grid" class="pilots-grid">
                     <!-- Les pilotes seront ajoutés dynamiquement ici -->
                 </div>
             </div>
-
         </div>
 
         <div class="controls-container">
+
+            <div id="country">
+                <!--Country selector -->
+                <label>Pays :</label>
+                <select id="countF1">
+                    <option value="" id="countryCo">Choisir Pays</option>
+                </select>
+            </div>
             <div class="control-group">
                 <label for="cir_f1">Circuits F1 :</label>
                 <select id="cir_f1">
                     <option value="">Sélectionnez un circuit</option>
                 </select>
             </div>
+
+
 
             <div class="control-group">
                 <label for="risk-filter">Niveau de risque :</label>
@@ -50,22 +91,18 @@
                 </select>
             </div>
 
-            <div class="control-group">
-                <label for="session-filter">Type de session :</label>
-                <select id="session-filter">
-                    <option value="all">Toutes les sessions</option>
-                    <option value="Course">Course</option>
-                    <option value="Essais">Essais</option>
-                    <option value="Qualifications">Qualifications</option>
-                    <option value="Test">Test</option>
-                </select>
+            <div class="weather-stats">
+                <h3>Conditions météorologiques</h3>
+                <div id="weather-chart" class="weather-chart">
+                    <!-- Le graphique sera ajouté ici -->
+                </div>
             </div>
 
-            <div class="control-group">
-                <label for="country-filter">Pays :</label>
-                <select id="country-filter">
-                    <option value="all">Tous les pays</option>
-                </select>
+            <div class="timeline">
+                <h3>Chronologie des accidents</h3>
+                <div id="accidents-timeline" class="accidents-timeline">
+                    <!-- La timeline sera ajoutée ici -->
+                </div>
             </div>
         </div>
     </div>
