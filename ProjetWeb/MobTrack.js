@@ -1,49 +1,109 @@
 "use strict";
-//Toutes les données sont récupérées depuis wikipédia et sont donc libre d'accès, la gestion des circuits quand à elle est disponible également librement sur github.
-// Meilleurs temps à ce jour sur les circuits du fichier geojson ( FONCTION FUTURE TAB AVEC MEILLEURS TEMPS).
-const bestTimes = [
-    { circuit: "Albert Park Circuit", time: "1:20.235", pilot: "Charles Leclerc", car: "Ferrari", session: "Course", year: 2022 },
-    { circuit: "Bahrain International Circuit", time: "1:31.447", pilot: "Pedro de la Rosa", car: "McLaren", session: "Course", year: 2005 },
-    { circuit: "Shanghai International Circuit", time: "1:32.238", pilot: "Michael Schumacher", car: "Ferrari", session: "Course", year: 2004 },
-    { circuit: "Baku City Circuit", time: "1:43.009", pilot: "Charles Leclerc", car: "Ferrari", session: "Qualifications", year: 2019 },
-    { circuit: "Circuit de Barcelona-Catalunya", time: "1:18.149", pilot: "Max Verstappen", car: "Red Bull", session: "Course", year: 2021 },
-    { circuit: "Circuit Gilles-Villeneuve", time: "1:13.078", pilot: "Valtteri Bottas", car: "Mercedes", session: "Course", year: 2019 },
-    { circuit: "Red Bull Ring", time: "1:05.619", pilot: "Carlos Sainz", car: "Ferrari", session: "Course", year: 2020 },
-    { circuit: "Silverstone Circuit", time: "1:27.097", pilot: "Max Verstappen", car: "Red Bull", session: "Course", year: 2020 },
-    { circuit: "Hungaroring", time: "1:16.627", pilot: "Lewis Hamilton", car: "Mercedes", session: "Course", year: 2020 },
-    { circuit: "Circuit de Spa-Francorchamps", time: "1:46.286", pilot: "Valtteri Bottas", car: "Mercedes", session: "Course", year: 2018 },
-    { circuit: "Circuit Zandvoort", time: "1:11.097", pilot: "Lewis Hamilton", car: "Mercedes", session: "Course", year: 2021 },
-    { circuit: "Autodromo Nazionale Monza", time: "1:21.046", pilot: "Rubens Barrichello", car: "Ferrari", session: "Course", year: 2004 },
-    { circuit: "Marina Bay Street Circuit", time: "1:41.905", pilot: "Kevin Magnussen", car: "Haas", session: "Course", year: 2018 },
-    { circuit: "Suzuka International Racing Course", time: "1:30.983", pilot: "Lewis Hamilton", car: "Mercedes", session: "Course", year: 2019 },
-    { circuit: "Circuit of the Americas", time: "1:36.169", pilot: "Charles Leclerc", car: "Ferrari", session: "Course", year: 2019 },
-    { circuit: "Autódromo Hermanos Rodríguez", time: "1:18.741", pilot: "Valtteri Bottas", car: "Mercedes", session: "Course", year: 2021 },
-    { circuit: "Interlagos Circuit", time: "1:10.540", pilot: "Valtteri Bottas", car: "Mercedes", session: "Course", year: 2018 },
-    { circuit: "Yas Marina Circuit", time: "1:39.283", pilot: "Lewis Hamilton", car: "Mercedes", session: "Course", year: 2019 }
-];
 
-// Ajout des pays liés aux circuits pour filtre de pays. ( FONCTION FUTURE ) 
-const countryMapping = {
-    "Albert Park Circuit": "Australie",
-    "Bahrain International Circuit": "Bahreïn",
-    "Shanghai International Circuit": "Chine",
-    "Baku City Circuit": "Azerbaïdjan",
-    "Circuit de Barcelona-Catalunya": "Espagne",
-    "Circuit Gilles-Villeneuve": "Canada",
-    "Red Bull Ring": "Autriche",
-    "Silverstone Circuit": "Royaume-Uni",
-    "Hungaroring": "Hongrie",
-    "Circuit de Spa-Francorchamps": "Belgique",
-    "Circuit Zandvoort": "Pays-Bas",
-    "Autodromo Nazionale Monza": "Italie",
-    "Marina Bay Street Circuit": "Singapour",
-    "Suzuka International Racing Course": "Japon",
-    "Circuit of the Americas": "États-Unis",
-    "Autódromo Hermanos Rodríguez": "Mexique",
-    "Interlagos Circuit": "Brésil",
-    "Yas Marina Circuit": "Émirats Arabes Unis"
-};
+let idCount;
+let idTrack;
+let map;
+let marker;
 
+/*
+ * Load all track from locationData
+ */
+function loadTrack(locationData) {
+    const select = document.getElementById("trackF1");
+    let countTra = 0;  //count the number of track
+
+    const tra = locationData.features.map(feature => feature.properties);
+    tra.forEach(track => {
+        countTra++;
+        const option = document.createElement("option");
+        option.value = track.id;
+        option.textContent = track.name;
+        select.appendChild(option);
+
+    })
+
+    const trackCo = document.getElementById("trackCo");
+    trackCo.textContent = trackCo.textContent + " (" + countTra + ")";
+}
+
+/*
+ * Load all country prefix from locationData and the name from countryData
+ */
+function loadCountry(locationData, countryData) {
+    const select = document.getElementById("countF1");
+    let countCo = 0;
+
+    const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
+    countryNames.forEach(country => {
+        countCo++;
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = countryData[country.toUpperCase()];
+        select.appendChild(option);
+    })
+    const countryCo = document.getElementById("countryCo");
+    countryCo.textContent = countryCo.textContent + " (" + countCo + ")";
+}
+
+/*
+ * change the center of the map depend on the idTrack
+ */
+function goToTrack(locationData, idTrack) {
+    const tra = locationData.features.find(e => e.properties.id === idTrack);
+    console.log('cir:' ,tra);
+    let lat = tra.properties.lat;
+    let lon = tra.properties.lon;
+    map.flyTo([lat, lon], 15);
+    marker = L.marker([lat, lon]);
+    marker.bindTooltip("Beach");
+    marker.addTo(map);
+}
+
+/*
+ * track selector
+ */
+function selectTrack(locationData) {
+    let selectedTrack = document.getElementById("trackF1");
+    selectedTrack.onchange = e=>{
+        idTrack = e.target.value;
+        goToTrack(locationData, idTrack);
+    }
+}
+
+/*
+ * country selector
+ */
+function selectCountry(locationData) {
+    let selectedCountry = document.getElementById("countF1");
+    selectedCountry.onchange = e=>{
+        idCount = e.target.value;
+        updateTrack(locationData);
+        console.log('idcount:', idCount);
+    }
+}
+/*
+ * Update track selector depending the country selected
+ */
+function updateTrack(locationData) {
+    const select = document.getElementById("trackF1");
+
+    for (let i=0; i <= 35; i++) {   //Remove all option selected before
+        select.remove(1);
+    }
+
+    let countUTra = 0;  //count the number of track
+    const tra = locationData.features.filter(e => e.properties.id.slice(0,2) === idCount);
+    tra.forEach(track => {
+        countUTra++;
+        const option = document.createElement("option");
+        option.value = track.properties.id;
+        option.textContent = track.properties.name;
+        select.appendChild(option);
+    })
+
+    const trackCo = document.getElementById("trackCo");
+    trackCo.textContent = "Choisir un circuit (" + countUTra + ")";
+}
 function getCircuitRiskLevel(accidents) {
     if (accidents === 0) return { level: 'low', text: 'Risque faible' };
     if (accidents === 1) return { level: 'moderate', text: 'Risque modéré' };
@@ -84,9 +144,6 @@ function getRiskZoneStyle() {
     };
 }
 
-
-//Fonction pour ajouter les accidents aux circuits relatifs.
-// Explication : Circuit à moins de 1000m = accident relié au circuit (pour eviter les erreurs de localisation)
 function findNearestCircuit(accidentCoords, circuits) {
     let nearestCircuit = null;
     let minDistance = Infinity;
@@ -112,8 +169,87 @@ function findNearestCircuit(accidentCoords, circuits) {
     return minDistance < 1000 ? nearestCircuit : null;
 }
 
+function updateStatistics(accidents, circuits) {
+    // Total des accidents
+    document.getElementById('total-accidents').textContent = accidents.features.length;
 
-// Selection de circuit dynamique utilisant le fichier html directement.
+    // Circuit le plus dangereux
+    const circuitAccidents = {};
+    accidents.features.forEach(accident => {
+        const circuit = accident.properties.circuit;
+        circuitAccidents[circuit] = (circuitAccidents[circuit] || 0) + 1;
+    });
+    const mostDangerousCircuit = Object.entries(circuitAccidents)
+        .sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('most-dangerous-circuit').textContent =
+        `${mostDangerousCircuit[0]} (${mostDangerousCircuit[1]})`;
+
+    // Année la plus accidentée
+    const yearAccidents = {};
+    accidents.features.forEach(accident => {
+        const year = accident.properties.date.split('-')[0];
+        yearAccidents[year] = (yearAccidents[year] || 0) + 1;
+    });
+    const mostDangerousYear = Object.entries(yearAccidents)
+        .sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('most-dangerous-year').textContent =
+        `${mostDangerousYear[0]} (${mostDangerousYear[1]})`;
+
+    // Type de session le plus risqué
+    const sessionAccidents = {};
+    accidents.features.forEach(accident => {
+        const session = accident.properties.typesession;
+        sessionAccidents[session] = (sessionAccidents[session] || 0) + 1;
+    });
+    const mostDangerousSession = Object.entries(sessionAccidents)
+        .sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('most-dangerous-session').textContent =
+        `${mostDangerousSession[0]} (${mostDangerousSession[1]})`;
+
+    // Mise à jour du graphique météo
+    updateWeatherChart(accidents);
+
+    // Mise à jour de la timeline
+    updateAccidentsTimeline(accidents);
+}
+
+function updateWeatherChart(accidents) {
+    const weatherStats = {};
+    accidents.features.forEach(accident => {
+        const weather = accident.properties.meteo;
+        weatherStats[weather] = (weatherStats[weather] || 0) + 1;
+    });
+
+    const weatherChart = document.getElementById('weather-chart');
+    weatherChart.innerHTML = '';
+
+    Object.entries(weatherStats).forEach(([weather, count]) => {
+        const percentage = (count / accidents.features.length) * 100;
+        weatherChart.innerHTML += `
+            <div class="weather-bar">
+                <div class="weather-label">${weather}</div>
+                <div class="weather-value" style="width: ${percentage}%">${count}</div>
+            </div>
+        `;
+    });
+}
+
+function updateAccidentsTimeline(accidents) {
+    const timeline = document.getElementById('accidents-timeline');
+    const sortedAccidents = accidents.features
+        .sort((a, b) => new Date(b.properties.date) - new Date(a.properties.date));
+
+    timeline.innerHTML = sortedAccidents.map(accident => `
+        <div class="timeline-item">
+            <div class="timeline-date">${accident.properties.date}</div>
+            <div class="timeline-content">
+                <strong>${accident.properties.pilot}</strong>
+                <p>${accident.properties.circuit} - ${accident.properties.typesession}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
 function populateCircuitSelector(circuits, selectedRisk = 'all') {
     const select = document.getElementById("cir_f1");
     select.innerHTML = '<option value="">Sélectionnez un circuit</option>';
@@ -139,58 +275,102 @@ function populateCircuitSelector(circuits, selectedRisk = 'all') {
     });
 }
 
-function updatePilotsList(accidents) {
+function updatePilotsList(accidents, yearFilter = 'all', sessionFilter = 'all') {
     const pilotsGrid = document.getElementById('pilots-grid');
     pilotsGrid.innerHTML = '';
 
-    // Créer un Set pour avoir des pilotes uniques
-    const uniquePilots = new Set();
-    accidents.features.forEach(accident => {
-        uniquePilots.add(accident.properties.pilot);
+    // Filtrer les accidents selon les critères
+    const filteredAccidents = accidents.features.filter(accident => {
+        const year = accident.properties.date.split('-')[0];
+        const session = accident.properties.typesession;
+        return (yearFilter === 'all' || year === yearFilter) &&
+            (sessionFilter === 'all' || session === sessionFilter);
     });
 
-    // Convertir les noms en tableau et trier par ordre alphabétique
-    const sortedPilots = Array.from(uniquePilots).sort();
+    // Créer un Map pour stocker les statistiques des pilotes
+    const pilotStats = new Map();
+    filteredAccidents.forEach(accident => {
+        const pilot = accident.properties.pilot;
+        if (!pilotStats.has(pilot)) {
+            pilotStats.set(pilot, {
+                accidents: 0,
+                sessions: new Set(),
+                years: new Set()
+            });
+        }
+        const stats = pilotStats.get(pilot);
+        stats.accidents++;
+        stats.sessions.add(accident.properties.typesession);
+        stats.years.add(accident.properties.date.split('-')[0]);
+    });
 
-    sortedPilots.forEach(pilot => {
+    // Convertir en tableau et trier
+    const sortedPilots = Array.from(pilotStats.entries())
+        .sort((a, b) => b[1].accidents - a[1].accidents);
+
+    sortedPilots.forEach(([pilot, stats]) => {
         const pilotCard = document.createElement('div');
         pilotCard.className = 'pilot-card';
 
-        // Créer le lien Wikipedia en formatant le nom du pilote
         const wikiName = pilot.replace(/ /g, '_');
         const wikiLink = `https://fr.wikipedia.org/wiki/${wikiName}`;
 
-        //Petit ajout pour qur la navigation soit plus dynamique et agréable :
-        const tooltip = document.createElement('div');
-        tooltip.className = 'pilot-image-tooltip';
-
-        // Chargement asynchrone de l'image du pilote
-        fetch(`https://fr.wikipedia.org/w/api.php?action=query&titles=${wikiName}&prop=pageimages&format=json&pithumbsize=200&origin=*`)
-            .then(response => response.json())
-            .then(data => {
-                const pages = data.query.pages;
-                const pageId = Object.keys(pages)[0];
-                if (pages[pageId].thumbnail) {
-                    const img = document.createElement('img');
-                    img.src = pages[pageId].thumbnail.source;
-                    img.alt = pilot;
-                    tooltip.appendChild(img);
-                } else {
-                    tooltip.innerHTML = '<p class="no-image-text">Photo non disponible</p>';
-                }
-            })
-            .catch(() => {
-                tooltip.innerHTML = '<p class="no-image-text">Photo non disponible</p>';
-            });
-
-        pilotCard.innerHTML = `<a href="${wikiLink}" target="_blank">${pilot}</a>`;
+        pilotCard.innerHTML = `
+            <a href="${wikiLink}" target="_blank">
+                ${pilot}
+                <div class="pilot-stats">
+                    ${stats.accidents} accident${stats.accidents > 1 ? 's' : ''}<br>
+                    ${stats.years.size} année${stats.years.size > 1 ? 's' : ''}<br>
+                    ${stats.sessions.size} type${stats.sessions.size > 1 ? 's' : ''} de session
+                </div>
+            </a>
+        `;
         pilotsGrid.appendChild(pilotCard);
-        pilotCard.appendChild(tooltip);
+
     });
 }
 
+function loadCountry(locationData, countryData) {
+    const select = document.getElementById("countF1");
+    let countCo = 0;
+
+    const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
+    countryNames.forEach(country => {
+        countCo++;
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = countryData[country.toUpperCase()];
+        select.appendChild(option);
+    })
+    const countryCo = document.getElementById("countryCo");
+    countryCo.textContent = countryCo.textContent + " (" + countCo + ")";
+}
 
 
+function populateFilters(accidents) {
+    const yearFilter = document.getElementById('year-filter');
+    const sessionFilter = document.getElementById('session-filter');
+
+    // Années uniques
+    const years = new Set(accidents.features.map(a => a.properties.date.split('-')[0]));
+    const sortedYears = Array.from(years).sort((a, b) => b - a);
+    sortedYears.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearFilter.appendChild(option);
+    });
+
+    // Sessions uniques
+    const sessions = new Set(accidents.features.map(a => a.properties.typesession));
+    const sortedSessions = Array.from(sessions).sort();
+    sortedSessions.forEach(session => {
+        const option = document.createElement('option');
+        option.value = session;
+        option.textContent = session;
+        sessionFilter.appendChild(option);
+    });
+}
 
 function createLayer(data, selectedCircuit = null, selectedRisk = 'all') {
     return L.geoJSON(data, {
@@ -269,16 +449,28 @@ window.onload = async () => {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+
     try {
-        const [circuitsResponse, accidentsResponse, riskZonesResponse] = await Promise.all([
+        const [circuitsResponse, accidentsResponse, riskZonesResponse, countriesResponse, locationResponse] = await Promise.all([
             fetch("f1-circuits.geojson"),
             fetch("accidents.geojson"),
-            fetch("risk-zones.geojson")
+            fetch("risk-zones.geojson"),
+            fetch("countries-FR.json"),
+            fetch("f1-locations.geojson")
         ]);
 
         const circuitsData = await circuitsResponse.json();
         const accidentsData = await accidentsResponse.json();
         const riskZonesData = await riskZonesResponse.json();
+        const countriesData = await countriesResponse.json();
+        const locationData = await locationResponse.json();
+
+        loadCountry(locationData,countriesData);
+        // Initialiser les statistiques
+        updateStatistics(accidentsData, circuitsData);
+
+        // Initialiser les filtres
+        populateFilters(accidentsData);
 
         // Initialiser la liste des pilotes
         updatePilotsList(accidentsData);
@@ -317,6 +509,7 @@ window.onload = async () => {
 
         populateCircuitSelector(circuitsData, selectedRisk);
 
+        // Event listeners pour les filtres
         document.getElementById("risk-filter").onchange = e => {
             selectedRisk = e.target.value;
             populateCircuitSelector(circuitsData, selectedRisk);
@@ -326,6 +519,18 @@ window.onload = async () => {
         document.getElementById("cir_f1").onchange = e => {
             selectedCircuit = e.target.value;
             updateMap();
+        };
+
+        document.getElementById("year-filter").onchange = e => {
+            const yearFilter = e.target.value;
+            const sessionFilter = document.getElementById("session-filter").value;
+            updatePilotsList(accidentsData, yearFilter, sessionFilter);
+        };
+
+        document.getElementById("session-filter").onchange = e => {
+            const yearFilter = document.getElementById("year-filter").value;
+            const sessionFilter = e.target.value;
+            updatePilotsList(accidentsData, yearFilter, sessionFilter);
         };
 
         function updateMap() {
