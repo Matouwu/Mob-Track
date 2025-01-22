@@ -1,575 +1,354 @@
-"use strict";
+// Variables globales pour la gestion de la carte et des couches
+let mapInstance;
+let circuitMarker;
+let circuitsLayer;
+let accidentsLayer;
+let riskZonesLayer;
 
-let idCount;
-let idTrack;
-let map;
-let marker;
+// Constantes pour les niveaux de risque
+const RISK_LEVELS = {
+    low: { text: 'Risque faible', color: '#10b981', min: 0, max: 0 },
+    moderate: { text: 'Risque modéré', color: '#f59e0b', min: 1, max: 1 },
+    high: { text: 'Risque élevé', color: '#ef4444', min: 2, max: 2 },
+    extreme: { text: 'Risque extrême', color: '#7f1d1d', min: 3, max: Infinity }
+};
 
-/*
- * Load all track from locationData
- */
-function loadTrack(locationData) {
-    const select = document.getElementById("trackF1");
-    let countTra = 0;  //count the number of track
+// Fonction principale d'initialisation
+window.onload = async function() {
+    // Initialisation de la carte
+    mapInstance = L.map('map').setView([30.135, -97.633], 4);
 
-    const tra = locationData.features.map(feature => feature.properties);
-    tra.forEach(track => {
-        countTra++;
-        const option = document.createElement("option");
-        option.value = track.id;
-        option.textContent = track.name;
-        select.appendChild(option);
+    // Ajout du fond de carte OpenStreetMap
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 15,
+        attribution: 'Map data © OpenStreetMap'
+    }).addTo(mapInstance);
 
-    })
+    try {
+        // Chargement des données
+        const [circuits, accidents, riskZones, countries, locations] = await Promise.all([
+            fetch("f1-circuits.geojson").then(res => res.json()),
+            fetch("accidents.geojson").then(res => res.json()),
+            fetch("risk-zones.geojson").then(res => res.json()),
+            fetch("countries-FR.json").then(res => res.json()),
+            fetch("f1-locations.geojson").then(res => res.json())
+        ]);
 
-    const trackCo = document.getElementById("trackCo");
-    trackCo.textContent = trackCo.textContent + " (" + countTra + ")";
-}
+        // Fusion des données
+        const enhancedData = enhanceData(circuits, locations, accidents);
 
-/*
- * Load all country prefix from locationData and the name from countryData
- */
-function loadCountry(locationData, countryData) {
-    const select = document.getElementById("countF1");
-    let countCo = 0;
+        // Initialisation
+        initializeSelectors(enhancedData, countries);
+        displayMapLayers(enhancedData, accidents, riskZones);
+        setupEventListeners(enhancedData, accidents);
 
-    const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
-    countryNames.forEach(country => {
-        countCo++;
-        const option = document.createElement("option");
-        option.value = country;
-        option.textContent = countryData[country.toUpperCase()];
-        select.appendChild(option);
-    })
-    const countryCo = document.getElementById("countryCo");
-    countryCo.textContent = countryCo.textContent + " (" + countCo + ")";
-}
+        // Mise à jour interface
+        updateStatistics(accidents);
+        updatePilotsList(accidents);
+        setupFilters(accidents);
 
-/*
- * change the center of the map depend on the idTrack
- */
-function goToTrack(locationData, idTrack) {
-    const tra = locationData.features.find(e => e.properties.id === idTrack);
-    console.log('cir:' ,tra);
-    let lat = tra.properties.lat;
-    let lon = tra.properties.lon;
-    map.flyTo([lat, lon], 15);
-    marker = L.marker([lat, lon]);
-    marker.bindTooltip("Beach");
-    marker.addTo(map);
-}
-
-/*
- * track selector
- */
-function selectTrack(locationData) {
-    let selectedTrack = document.getElementById("trackF1");
-    selectedTrack.onchange = e=>{
-        idTrack = e.target.value;
-        goToTrack(locationData, idTrack);
+    } catch (error) {
+        console.error("Erreur lors du chargement des données:", error);
+        alert("Une erreur est survenue lors du chargement des données");
     }
-}
+};
 
-/*
- * country selector
- */
-function selectCountry(locationData) {
-    let selectedCountry = document.getElementById("countF1");
-    selectedCountry.onchange = e=>{
-        idCount = e.target.value;
-        updateTrack(locationData);
-        console.log('idcount:', idCount);
-    }
-}
-/*
- * Update track selector depending the country selected
- */
-function updateTrack(locationData) {
-    const select = document.getElementById("trackF1");
-
-    for (let i=0; i <= 35; i++) {   //Remove all option selected before
-        select.remove(1);
-    }
-
-    let countUTra = 0;  //count the number of track
-    const tra = locationData.features.filter(e => e.properties.id.slice(0,2) === idCount);
-    tra.forEach(track => {
-        countUTra++;
-        const option = document.createElement("option");
-        option.value = track.properties.id;
-        option.textContent = track.properties.name;
-        select.appendChild(option);
-    })
-
-    const trackCo = document.getElementById("trackCo");
-    trackCo.textContent = "Choisir un circuit (" + countUTra + ")";
-}
-function getCircuitRiskLevel(accidents) {
-    if (accidents === 0) return { level: 'low', text: 'Risque faible' };
-    if (accidents === 1) return { level: 'moderate', text: 'Risque modéré' };
-    if (accidents === 2) return { level: 'high', text: 'Risque élevé' };
-    return { level: 'extreme', text: 'Risque extrême' };
-}
-
-function createAccidentMarker(feature, latlng) {
-    const popupContent = `
-        <div class="accident-popup">
-            <h3>Détails de l'accident</h3>
-            <p class="pilot">Pilote : ${feature.properties.pilot}</p>
-            <p class="details">Date : ${feature.properties.date}</p>
-            <p class="details">Circuit : ${feature.properties.circuit}</p>
-            <p class="details">Type de session : ${feature.properties.typesession}</p>
-            <p class="details">Conditions météo : ${feature.properties.meteo}</p>
-            <p class="details">Description : ${feature.properties.description}</p>
-        </div>
-    `;
-
-    return L.circleMarker(latlng, {
-        radius: 8,
-        fillColor: "#ff4444",
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8
-    }).bindPopup(popupContent);
-}
-
-function getRiskZoneStyle() {
+// Fusion des données GeoJSON
+function enhanceData(circuits, locations, accidents) {
     return {
-        fillColor: '#ff6b6b',
-        weight: 2,
-        opacity: 0.7,
-        color: '#c92a2a',
-        fillOpacity: 0.35
+        type: "FeatureCollection",
+        features: circuits.features.map(circuit => {
+            const location = locations.features.find(f => f.properties.id === circuit.properties.id);
+            const accidentCount = countCircuitAccidents(circuit, accidents);
+
+            return {
+                ...circuit,
+                properties: {
+                    ...circuit.properties,
+                    ...location?.properties,
+                    accidents: accidentCount,
+                    riskLevel: getRiskLevel(accidentCount)
+                }
+            };
+        })
     };
 }
 
-function findNearestCircuit(accidentCoords, circuits) {
-    let nearestCircuit = null;
-    let minDistance = Infinity;
-
-    circuits.features.forEach(circuit => {
-        const circuitPoints = circuit.geometry.coordinates.map(coord => L.latLng(coord[1], coord[0]));
-        const accidentPoint = L.latLng(accidentCoords[1], accidentCoords[0]);
-
-        let minDistToCircuit = Infinity;
-        circuitPoints.forEach(point => {
-            const dist = accidentPoint.distanceTo(point);
-            if (dist < minDistToCircuit) {
-                minDistToCircuit = dist;
-            }
-        });
-
-        if (minDistToCircuit < minDistance) {
-            minDistance = minDistToCircuit;
-            nearestCircuit = circuit;
-        }
-    });
-
-    return minDistance < 1000 ? nearestCircuit : null;
+function countCircuitAccidents(circuit, accidents) {
+    return accidents.features.filter(accident =>
+        isAccidentNearCircuit(accident.geometry.coordinates, circuit)
+    ).length;
 }
 
-function updateStatistics(accidents, circuits) {
-    // Total des accidents
+function isAccidentNearCircuit([lon, lat], circuit) {
+    const circuitPoints = circuit.geometry.coordinates;
+    const maxDistance = 1000; // 1km
+
+    return circuitPoints.some(([clon, clat]) =>
+        calculateDistance(lat, lon, clat, clon) < maxDistance
+    );
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const φ1 = lat1 * Math.PI/180;
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2 - lat1) * Math.PI/180;
+    const Δλ = (lon2 - lon1) * Math.PI/180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+// Gestion des sélecteurs
+function initializeSelectors(circuits, countries) {
+    const countrySelect = document.getElementById("countF1");
+    countrySelect.innerHTML = '<option value="">Tous les pays</option>';
+
+    Array.from(new Set(circuits.features.map(f => f.properties.id.slice(0, 2))))
+        .sort()
+        .forEach(code => {
+            const option = document.createElement("option");
+            option.value = code;
+            option.textContent = countries[code.toUpperCase()];
+            countrySelect.appendChild(option);
+        });
+
+    updateCircuitList(circuits);
+}
+
+function updateCircuitList(circuits, selectedCountry = '', selectedRisk = 'all') {
+    const circuitSelect = document.getElementById("trackF1");
+    circuitSelect.innerHTML = '<option value="">Sélectionner un circuit</option>';
+
+    circuits.features.filter(circuit => {
+        const countryMatch = !selectedCountry || circuit.properties.id.startsWith(selectedCountry);
+        const riskMatch = selectedRisk === 'all' || circuit.properties.riskLevel === selectedRisk;
+        return countryMatch && riskMatch;
+    }).forEach(circuit => {
+        const option = document.createElement("option");
+        option.value = circuit.properties.id;
+        option.textContent = circuit.properties.name;
+        circuitSelect.appendChild(option);
+    });
+}
+
+function getRiskLevel(accidents) {
+    for (const [level, config] of Object.entries(RISK_LEVELS)) {
+        if (accidents >= config.min && accidents <= config.max) {
+            return level;
+        }
+    }
+    return 'low';
+}
+
+// Affichage carte
+function displayMapLayers(circuits, accidents, riskZones) {
+    displayCircuits(circuits);
+    displayAccidents(accidents);
+    displayRiskZones(riskZones);
+}
+
+function displayCircuits(circuits) {
+    circuitsLayer = L.geoJSON(circuits, {
+        style: getCircuitStyle,
+        onEachFeature: bindCircuitPopup
+    }).addTo(mapInstance);
+}
+
+function getCircuitStyle(feature) {
+    return {
+        color: RISK_LEVELS[feature.properties.riskLevel].color,
+        weight: 3,
+        opacity: 0.8
+    };
+}
+
+function bindCircuitPopup(feature, layer) {
+    layer.bindPopup(`
+        <div class="circuit-popup">
+            <h3>${feature.properties.name}</h3>
+            <p>Pays: ${feature.properties.country}</p>
+            <p>Accidents: ${feature.properties.accidents}</p>
+            <p>Niveau de risque: ${RISK_LEVELS[feature.properties.riskLevel].text}</p>
+        </div>
+    `);
+}
+
+function displayAccidents(accidents) {
+    accidentsLayer = L.geoJSON(accidents, {
+        pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+            radius: 6,
+            fillColor: '#dc2626',
+            color: '#000',
+            weight: 1,
+            fillOpacity: 0.7
+        })
+    }).bindPopup(feature => `
+        <div class="accident-popup">
+            <h3>${feature.properties.pilot}</h3>
+            <p>Date: ${feature.properties.date}</p>
+            <p>Session: ${feature.properties.typesession}</p>
+        </div>
+    `).addTo(mapInstance);
+}
+
+function displayRiskZones(riskZones) {
+    riskZonesLayer = L.geoJSON(riskZones, {
+        style: {
+            fillColor: '#ef4444',
+            weight: 1,
+            opacity: 0.5,
+            fillOpacity: 0.2
+        }
+    }).addTo(mapInstance);
+}
+
+// Statistiques
+function updateStatistics(accidents) {
     document.getElementById('total-accidents').textContent = accidents.features.length;
 
-    // Circuit le plus dangereux
-    const circuitAccidents = {};
-    accidents.features.forEach(accident => {
-        const circuit = accident.properties.circuit;
-        circuitAccidents[circuit] = (circuitAccidents[circuit] || 0) + 1;
-    });
-    const mostDangerousCircuit = Object.entries(circuitAccidents)
-        .sort((a, b) => b[1] - a[1])[0];
-    document.getElementById('most-dangerous-circuit').textContent =
-        `${mostDangerousCircuit[0]} (${mostDangerousCircuit[1]})`;
+    const yearStats = countByProperty(accidents, 'date', d => d.split('-')[0]);
+    const [mostYear, yearCount] = getMaxEntry(yearStats);
+    document.getElementById('most-dangerous-year').textContent = `${mostYear} (${yearCount})`;
 
-    // Année la plus accidentée
-    const yearAccidents = {};
-    accidents.features.forEach(accident => {
-        const year = accident.properties.date.split('-')[0];
-        yearAccidents[year] = (yearAccidents[year] || 0) + 1;
-    });
-    const mostDangerousYear = Object.entries(yearAccidents)
-        .sort((a, b) => b[1] - a[1])[0];
-    document.getElementById('most-dangerous-year').textContent =
-        `${mostDangerousYear[0]} (${mostDangerousYear[1]})`;
-
-    // Type de session le plus risqué
-    const sessionAccidents = {};
-    accidents.features.forEach(accident => {
-        const session = accident.properties.typesession;
-        sessionAccidents[session] = (sessionAccidents[session] || 0) + 1;
-    });
-    const mostDangerousSession = Object.entries(sessionAccidents)
-        .sort((a, b) => b[1] - a[1])[0];
-    document.getElementById('most-dangerous-session').textContent =
-        `${mostDangerousSession[0]} (${mostDangerousSession[1]})`;
-
-    // Mise à jour du graphique météo
-    updateWeatherChart(accidents);
-
-    // Mise à jour de la timeline
-    updateAccidentsTimeline(accidents);
+    updateWeatherStats(accidents);
 }
 
-function updateWeatherChart(accidents) {
-    const weatherStats = {};
-    accidents.features.forEach(accident => {
-        const weather = accident.properties.meteo;
-        weatherStats[weather] = (weatherStats[weather] || 0) + 1;
-    });
+function countByProperty(data, prop, transform = v => v) {
+    return data.features.reduce((stats, feature) => {
+        const key = transform(feature.properties[prop]);
+        stats[key] = (stats[key] || 0) + 1;
+        return stats;
+    }, {});
+}
 
+function getMaxEntry(obj) {
+    return Object.entries(obj).reduce((max, entry) => entry[1] > max[1] ? entry : max, ['', 0]);
+}
+
+function updateWeatherStats(accidents) {
     const weatherChart = document.getElementById('weather-chart');
-    weatherChart.innerHTML = '';
-
-    Object.entries(weatherStats).forEach(([weather, count]) => {
-        const percentage = (count / accidents.features.length) * 100;
-        weatherChart.innerHTML += `
+    weatherChart.innerHTML = Object.entries(countByProperty(accidents, 'meteo'))
+        .sort((a, b) => b[1] - a[1])
+        .map(([weather, count]) => `
             <div class="weather-bar">
-                <div class="weather-label">${weather}</div>
-                <div class="weather-value" style="width: ${percentage}%">${count}</div>
+                <span class="weather-label">${weather}</span>
+                <span class="weather-count">${count}</span>
             </div>
-        `;
-    });
+        `).join('');
 }
 
-function updateAccidentsTimeline(accidents) {
-    const timeline = document.getElementById('accidents-timeline');
-    const sortedAccidents = accidents.features
-        .sort((a, b) => new Date(b.properties.date) - new Date(a.properties.date));
-
-    timeline.innerHTML = sortedAccidents.map(accident => `
-        <div class="timeline-item">
-            <div class="timeline-date">${accident.properties.date}</div>
-            <div class="timeline-content">
-                <strong>${accident.properties.pilot}</strong>
-                <p>${accident.properties.circuit} - ${accident.properties.typesession}</p>
-            </div>
-        </div>
-    `).join('');
-}
-
-function populateCircuitSelector(circuits, selectedRisk = 'all') {
-    const select = document.getElementById("cir_f1");
-    select.innerHTML = '<option value="">Sélectionnez un circuit</option>';
-
-    const filteredCircuits = circuits.features.filter(feature => {
-        if (selectedRisk === 'all') return true;
-        const accidents = feature.properties.accidents || 0;
-        return getCircuitRiskLevel(accidents).level === selectedRisk;
-    });
-
-    const circuitNames = filteredCircuits
-        .map(feature => ({
-            name: feature.properties.Name,
-            accidents: feature.properties.accidents || 0
-        }))
-        .sort((a, b) => b.accidents - a.accidents);
-
-    circuitNames.forEach(circuit => {
-        const option = document.createElement('option');
-        option.value = circuit.name;
-        option.textContent = `${circuit.name} (${circuit.accidents} accident${circuit.accidents !== 1 ? 's' : ''})`;
-        select.appendChild(option);
-    });
-}
-
+// Pilotes
 function updatePilotsList(accidents, yearFilter = 'all', sessionFilter = 'all') {
-    const pilotsGrid = document.getElementById('pilots-grid');
-    pilotsGrid.innerHTML = '';
+    const filtered = filterAccidents(accidents, yearFilter, sessionFilter);
+    const pilotStats = computePilotStats(filtered);
+    displayPilotCards(pilotStats);
+}
 
-    // Filtrer les accidents selon les critères
-    const filteredAccidents = accidents.features.filter(accident => {
-        const year = accident.properties.date.split('-')[0];
-        const session = accident.properties.typesession;
-        return (yearFilter === 'all' || year === yearFilter) &&
-            (sessionFilter === 'all' || session === sessionFilter);
+function filterAccidents(accidents, year, session) {
+    return accidents.features.filter(f => {
+        const accidentYear = f.properties.date.split('-')[0];
+        return (year === 'all' || accidentYear === year) &&
+            (session === 'all' || f.properties.typesession === session);
     });
+}
 
-    // Créer un Map pour stocker les statistiques des pilotes
-    const pilotStats = new Map();
-    filteredAccidents.forEach(accident => {
+function computePilotStats(accidents) {
+    return accidents.reduce((stats, accident) => {
         const pilot = accident.properties.pilot;
-        if (!pilotStats.has(pilot)) {
-            pilotStats.set(pilot, {
+        if (!stats[pilot]) {
+            stats[pilot] = {
                 accidents: 0,
-                sessions: new Set(),
-                years: new Set()
-            });
-        }
-        const stats = pilotStats.get(pilot);
-        stats.accidents++;
-        stats.sessions.add(accident.properties.typesession);
-        stats.years.add(accident.properties.date.split('-')[0]);
-    });
-
-    // Convertir en tableau et trier
-    const sortedPilots = Array.from(pilotStats.entries())
-        .sort((a, b) => b[1].accidents - a[1].accidents);
-
-    sortedPilots.forEach(([pilot, stats]) => {
-        const pilotCard = document.createElement('div');
-        pilotCard.className = 'pilot-card';
-
-        const wikiName = pilot.replace(/ /g, '_');
-        const wikiLink = `https://fr.wikipedia.org/wiki/${wikiName}`;
-
-        pilotCard.innerHTML = `
-            <a href="${wikiLink}" target="_blank">
-                ${pilot}
-                <div class="pilot-stats">
-                    ${stats.accidents} accident${stats.accidents > 1 ? 's' : ''}<br>
-                    ${stats.years.size} année${stats.years.size > 1 ? 's' : ''}<br>
-                    ${stats.sessions.size} type${stats.sessions.size > 1 ? 's' : ''} de session
-                </div>
-            </a>
-        `;
-        pilotsGrid.appendChild(pilotCard);
-
-    });
-}
-
-function loadCountry(locationData, countryData) {
-    const select = document.getElementById("countF1");
-    let countCo = 0;
-
-    const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
-    countryNames.forEach(country => {
-        countCo++;
-        const option = document.createElement("option");
-        option.value = country;
-        option.textContent = countryData[country.toUpperCase()];
-        select.appendChild(option);
-    })
-    const countryCo = document.getElementById("countryCo");
-    countryCo.textContent = countryCo.textContent + " (" + countCo + ")";
-}
-
-
-function populateFilters(accidents) {
-    const yearFilter = document.getElementById('year-filter');
-    const sessionFilter = document.getElementById('session-filter');
-
-    // Années uniques
-    const years = new Set(accidents.features.map(a => a.properties.date.split('-')[0]));
-    const sortedYears = Array.from(years).sort((a, b) => b - a);
-    sortedYears.forEach(year => {
-        const option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        yearFilter.appendChild(option);
-    });
-
-    // Sessions uniques
-    const sessions = new Set(accidents.features.map(a => a.properties.typesession));
-    const sortedSessions = Array.from(sessions).sort();
-    sortedSessions.forEach(session => {
-        const option = document.createElement('option');
-        option.value = session;
-        option.textContent = session;
-        sessionFilter.appendChild(option);
-    });
-}
-
-function createLayer(data, selectedCircuit = null, selectedRisk = 'all') {
-    return L.geoJSON(data, {
-        filter: function(feature) {
-            if (selectedCircuit && feature.properties.Name !== selectedCircuit) return false;
-
-            if (selectedRisk !== 'all') {
-                const accidents = feature.properties.accidents || 0;
-                const risk = getCircuitRiskLevel(accidents).level;
-                if (risk !== selectedRisk) return false;
-            }
-
-            return true;
-        },
-        style: function(feature) {
-            const accidents = feature.properties.accidents || 0;
-            const risk = getCircuitRiskLevel(accidents);
-
-            let color;
-            switch (risk.level) {
-                case 'low': color = '#10b981'; break;
-                case 'moderate': color = '#f59e0b'; break;
-                case 'high': color = '#ef4444'; break;
-                case 'extreme': color = '#7f1d1d'; break;
-                default: color = '#2c5282';
-            }
-
-            return {
-                color: color,
-                weight: 3,
-                opacity: 1,
-                fillColor: color,
-                fillOpacity: 0.7
+                years: new Set(),
+                sessions: new Set()
             };
-        },
-        onEachFeature: function(feature, layer) {
-            const accidents = feature.properties.accidents || 0;
-            const risk = getCircuitRiskLevel(accidents);
-
-            const popupContent = `
-                <div class="circuit-popup">
-                    <h3>${feature.properties.Name}</h3>
-                    <p>Longueur : ${feature.properties.length || 'N/A'}</p>
-                    <p>Accidents : ${accidents}</p>
-                    <p class="risk-${risk.level}">${risk.text}</p>
-                </div>
-            `;
-            layer.bindPopup(popupContent);
-
-            layer.on({
-                mouseover: function(e) {
-                    const layer = e.target;
-                    layer.setStyle({
-                        weight: 5,
-                        fillOpacity: 0.9
-                    });
-                    layer.bringToFront();
-                },
-                mouseout: function(e) {
-                    const layer = e.target;
-                    circuitsLayer.resetStyle(layer);
-                }
-            });
         }
+        stats[pilot].accidents++;
+        stats[pilot].years.add(accident.properties.date.split('-')[0]);
+        stats[pilot].sessions.add(accident.properties.typesession);
+        return stats;
+    }, {});
+}
+
+function displayPilotCards(stats) {
+    const pilotsGrid = document.getElementById('pilots-grid');
+    pilotsGrid.innerHTML = Object.entries(stats)
+        .sort((a, b) => b[1].accidents - a[1].accidents)
+        .map(([name, data]) => `
+            <div class="pilot-card">
+                <h4>${name}</h4>
+                <p>Accidents: ${data.accidents}</p>
+                <p>Années: ${data.years.size}</p>
+                <p>Sessions: ${data.sessions.size}</p>
+            </div>
+        `).join('');
+}
+
+// Filtres
+function setupFilters(accidents) {
+    setupYearFilter(accidents);
+    setupSessionFilter(accidents);
+}
+
+function setupYearFilter(accidents) {
+    const years = [...new Set(accidents.features.map(f => f.properties.date.split('-')[0]))].sort();
+    const select = document.getElementById('year-filter');
+    select.innerHTML = '<option value="all">Toutes années</option>' +
+        years.map(y => `<option value="${y}">${y}</option>`).join('');
+}
+
+function setupSessionFilter(accidents) {
+    const sessions = [...new Set(accidents.features.map(f => f.properties.typesession))].sort();
+    const select = document.getElementById('session-filter');
+    select.innerHTML = '<option value="all">Toutes sessions</option>' +
+        sessions.map(s => `<option value="${s}">${s}</option>`).join('');
+}
+
+// Gestion des événements
+function setupEventListeners(circuits, accidents) {
+    document.getElementById("countF1").addEventListener("change", e => {
+        const country = e.target.value;
+        const risk = document.getElementById("risk-filter").value;
+        updateCircuitList(circuits, country, risk);
+        updateCircuitDisplay(circuits, risk);
+    });
+
+    document.getElementById("risk-filter").addEventListener("change", e => {
+        const risk = e.target.value;
+        const country = document.getElementById("countF1").value;
+        updateCircuitList(circuits, country, risk);
+        updateCircuitDisplay(circuits, risk);
+    });
+
+    document.getElementById("trackF1").addEventListener("change", e => {
+        const circuit = circuits.features.find(f => f.properties.id === e.target.value);
+        if (circuit) {
+            mapInstance.flyTo([circuit.properties.lat, circuit.properties.lon], 14);
+            if (circuitMarker) mapInstance.removeLayer(circuitMarker);
+            circuitMarker = L.marker([circuit.properties.lat, circuit.properties.lon]).addTo(mapInstance);
+        }
+    });
+
+    document.getElementById("year-filter").addEventListener("change", e => {
+        updatePilotsList(accidents, e.target.value, document.getElementById("session-filter").value);
+    });
+
+    document.getElementById("session-filter").addEventListener("change", e => {
+        updatePilotsList(accidents, document.getElementById("year-filter").value, e.target.value);
     });
 }
 
-window.onload = async () => {
-    let map = L.map('map', {
-        center: [30.135, -97.633],
-        zoom: 17
-    });
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 15,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-
-    try {
-        const [circuitsResponse, accidentsResponse, riskZonesResponse, countriesResponse, locationResponse] = await Promise.all([
-            fetch("f1-circuits.geojson"),
-            fetch("accidents.geojson"),
-            fetch("risk-zones.geojson"),
-            fetch("countries-FR.json"),
-            fetch("f1-locations.geojson")
-        ]);
-
-        const circuitsData = await circuitsResponse.json();
-        const accidentsData = await accidentsResponse.json();
-        const riskZonesData = await riskZonesResponse.json();
-        const countriesData = await countriesResponse.json();
-        const locationData = await locationResponse.json();
-
-        loadCountry(locationData,countriesData);
-        // Initialiser les statistiques
-        updateStatistics(accidentsData, circuitsData);
-
-        // Initialiser les filtres
-        populateFilters(accidentsData);
-
-        // Initialiser la liste des pilotes
-        updatePilotsList(accidentsData);
-
-        // Réinitialiser le compteur d'accidents pour chaque circuit
-        circuitsData.features.forEach(circuit => {
-            circuit.properties.accidents = 0;
-        });
-
-        // Compter les accidents pour chaque circuit
-        accidentsData.features.forEach(accident => {
-            const nearestCircuit = findNearestCircuit(accident.geometry.coordinates, circuitsData);
-            if (nearestCircuit) {
-                nearestCircuit.properties.accidents = (nearestCircuit.properties.accidents || 0) + 1;
-                accident.properties.circuit_id = nearestCircuit.properties.id;
-            }
-        });
-
-        let selectedCircuit = '';
-        let selectedRisk = 'all';
-        let circuitsLayer = createLayer(circuitsData).addTo(map);
-
-        let accidentsLayer = L.geoJSON(accidentsData, {
-            pointToLayer: createAccidentMarker
-        }).addTo(map);
-
-        let riskZonesLayer = L.geoJSON(riskZonesData, {
-            style: getRiskZoneStyle,
-            onEachFeature: (feature, layer) => {
-                layer.bindPopup(`
-                    <strong>Zone à risque</strong><br>
-                    ${feature.properties.description || 'Zone dangereuse'}
-                `);
-            }
-        }).addTo(map);
-
-        populateCircuitSelector(circuitsData, selectedRisk);
-
-        // Event listeners pour les filtres
-        document.getElementById("risk-filter").onchange = e => {
-            selectedRisk = e.target.value;
-            populateCircuitSelector(circuitsData, selectedRisk);
-            updateMap();
-        };
-
-        document.getElementById("cir_f1").onchange = e => {
-            selectedCircuit = e.target.value;
-            updateMap();
-        };
-
-        document.getElementById("year-filter").onchange = e => {
-            const yearFilter = e.target.value;
-            const sessionFilter = document.getElementById("session-filter").value;
-            updatePilotsList(accidentsData, yearFilter, sessionFilter);
-        };
-
-        document.getElementById("session-filter").onchange = e => {
-            const yearFilter = document.getElementById("year-filter").value;
-            const sessionFilter = e.target.value;
-            updatePilotsList(accidentsData, yearFilter, sessionFilter);
-        };
-
-        function updateMap() {
-            if (circuitsLayer) {
-                map.removeLayer(circuitsLayer);
-            }
-
-            circuitsLayer = createLayer(circuitsData, selectedCircuit, selectedRisk).addTo(map);
-
-            const bounds = circuitsLayer.getBounds();
-            if (bounds.isValid()) {
-                map.flyToBounds(bounds, {
-                    padding: [50, 50],
-                    duration: 1
-                });
-            }
-
-            if (selectedCircuit) {
-                accidentsLayer.eachLayer(layer => {
-                    const isNearSelectedCircuit = circuitsData.features.some(circuit =>
-                        circuit.properties.Name === selectedCircuit &&
-                        layer.feature.properties.circuit_id === circuit.properties.id
-                    );
-                    layer.setStyle({ opacity: isNearSelectedCircuit ? 1 : 0.3, fillOpacity: isNearSelectedCircuit ? 0.8 : 0.2 });
-                });
-
-                riskZonesLayer.eachLayer(layer => {
-                    const circuitBounds = bounds;
-                    const isOverlapping = circuitBounds.overlaps(layer.getBounds());
-                    layer.setStyle({ opacity: isOverlapping ? 0.7 : 0.3, fillOpacity: isOverlapping ? 0.35 : 0.1 });
-                });
-            } else {
-                accidentsLayer.eachLayer(layer => layer.setStyle({ opacity: 1, fillOpacity: 0.8 }));
-                riskZonesLayer.eachLayer(layer => layer.setStyle(getRiskZoneStyle()));
-            }
-        }
-
-    } catch (error) {
-        console.error("Error loading GeoJSON data:", error);
-        alert("Error loading map data. Please try again later");
-    }
-};
+// Initialisation des filtres de risque
+function setupRiskFilter() {
+    const riskFilter = document.getElementById("risk-filter");
+    riskFilter.innerHTML = [
+        '<option value="all">Tous risques</option>',
+        ...Object.entries(RISK_LEVELS).map(([key, val]) =>
+            `<option value="${key}">${val.text} (${val.min === val.max ? val.min : `${val.min}+`} accident${val.min > 1 ? 's' : ''})</option>`
+        )
+    ].join('');
+}
+setupRiskFilter();
