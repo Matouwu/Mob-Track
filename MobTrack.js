@@ -127,8 +127,8 @@ async function loadRiskTrack(trackAPIData, listTrackId, riskTrack) {
         const statData = await statusResp.json();
 
         const statName= trackAPIData.MRData.CircuitTable.Circuits.find(e => e.circuitId === trackId).circuitName;
-        nbAcci = statData.MRData.StatusTable.Status[2].count;
-        nbColli =statData.MRData.StatusTable.Status[3].count;
+        nbAcci = statData.MRData.StatusTable.Status[0].count;
+        nbColli =statData.MRData.StatusTable.Status[1].count;
         riskTrack.push({
             id: trackId,
             name: statName,
@@ -188,12 +188,14 @@ window.onload = async () => {
         const tracksResponse = await fetch("data/f1-tracks.geojson");
         const locationResponse = await fetch("data/f1-locations.geojson");
         const countriesResponse = await fetch("data/countries-FR.json");
-        const trackAPIResponse = await fetch("http://ergast.com/api/f1/circuits.json?limit=77&offset=0");
-        const statusResponse = await fetch("http://ergast.com/api/f1/status.json");
+
+        const trackAPIResponse = await fetch("data/trackAPI.json");
+        const statusResponse = await fetch("data/status.json");
 
         const trackData = await tracksResponse.json();
         const locationData = await locationResponse.json();
         const countriesData = await countriesResponse.json();
+
         const trackAPIData = await trackAPIResponse.json();
         const statusData = await statusResponse.json();
 
@@ -204,11 +206,20 @@ window.onload = async () => {
         //* ====== Statistic section ====== *//
         // ================================= //
 
-        const accidents = statusData.MRData.StatusTable.Status[2].count;
-        const collisions = statusData.MRData.StatusTable.Status[3].count;
+        const accidents = statusData.MRData.StatusTable.Status[0].count;
+        const collisions = statusData.MRData.StatusTable.Status[1].count;
         //List of every track with there number of accidents and collision
         let riskTrack = [];
-        let listTrackId = trackAPIData.MRData.CircuitTable.Circuits.map(e => e.circuitId);
+        let listTrackId = [ "adelaide", "ain-diab", "aintree", "albert_park", "americas", "anderstorp",
+            "avus", "bahrain", "baku", "boavista", "brands_hatch", "bremgarten", "buddh", "catalunya", "charade",
+            "dallas","detroit", "dijon", "donington", "essarts", "estoril", "fuji", "galvez", "george",  "hockenheimring",
+            "hungaroring", "imola", "indianapolis", "interlagos", "istanbul", "jacarepagua", "jarama", "jeddah",
+            "jerez", "kyalami", "las_vegas", "lemans", "long_beach", "losail", "magny_cours", "marina_bay", "miami",
+            "monaco", "monsanto", "montjuic", "monza", "mosport", "mugello", "nivelles", "nurburgring", "okayama",
+            "pedralbes", "pescara", "phoenix", "portimao", "red_bull_ring", "reims", "ricard", "riverside", "rodriguez",
+            "sebring", "sepang", "shanghai", "silverstone", "sochi", "spa","suzuka","tremblant","valencia","vegas",
+            "villeneuve","watkins_glen","yas_marina","yeongam","zandvoort","zeltweg","zolder"];
+
         await loadDangerousTrack(trackAPIData, riskTrack, listTrackId);
         const mostDangerous = trackAPIData.MRData.CircuitTable.Circuits.find(e => e.circuitId === dangerousTrack.id).circuitName;
         console.log("DangerousTrack :", mostDangerous);
@@ -228,8 +239,8 @@ window.onload = async () => {
         //country selector
         selectCountry(locationData);
         // risk selector
-        // console.log("riskTrack :", riskTrack);
-        // selectRisk(locationData, riskTrack);
+        console.log("riskTrack :", riskTrack);
+        selectRisk(locationData, riskTrack);
 
 
         document.getElementById("reset")
