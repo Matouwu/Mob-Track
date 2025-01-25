@@ -10,36 +10,93 @@
     <link rel="stylesheet" href="MobTrack.css">
     <!-- add leaflet JavaScript here -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script type="module" src="MobTrack2.js"></script>
+    <script type="module" src="MobTrack.js"></script>
 
 </head>
 <body>
 <header>
     <nav>
-        <a href="MobTrack.html">
-            <img src="Logo%20MobTrack.png" alt="Mob Track">
+        <a href="data/MobTrack.html">
+            <img src="data/Logo%20MobTrack.png" alt="Mob Track">
         </a>
-
+        <p class="authors">Projet réalisé par : Malcom B. et Isabelle Z.</p>
     </nav>
 </header>
 <main>
-    <div id="map"></div>
-    <div class = "menu">
+    <section class="mapSection">
+        <!-- map -->
+        <div id="map"></div>
+
+        <!-- Statistic section -->
+        <div class="statSection">
+            <h2>Statistiques des accidents</h2>
+            <div class="statGrid">
+                <div class="statCard">
+                    <h3>Total des accidents</h3>
+                    <p id="totalAccidents">0</p>
+                </div>
+                <div class="statCard">
+                    <h3>Total des collision</h3>
+                    <p id="totalCollisions">0</p>
+                </div>
+                <div class="statCard">
+                    <h3>Circuit le plus dangereux</h3>
+                    <p id="mostDangerousTrack">-</p>
+                </div>
+                <div class="statCard">
+                    <h3>Année la plus accidentée</h3>
+                    <p id="mostDangerousYear">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pilot section -->
+        <div class="pilotsSection">
+            <h2>Pilotes impliqués dans des accidents</h2>
+            <div class="filters">
+                <select id="yearFilter">
+                    <option value="all">Toutes les années</option>
+                </select>
+                <select id="sessionFilter">
+                    <option value="all">Tous types de sessions</option>
+                </select>
+            </div>
+            <div id="pilotsGrid" class="pilotsGrid">
+            </div>
+        </div>
+    </section>
+
+    <div class = "controlsContainer">
         <h3>Summary</h3>
+
+        <!-- Country selector -->
         <div id="country">
-            <!--Country selector -->
             <label>Pays :</label>
             <select id="countF1">
                 <option value="" id="countryCo">Choisir Pays</option>
             </select>
         </div>
+
+        <!-- Track selector -->
         <div id="track">
-            <!--Track selector -->
             <label>Circuits F1 :</label>
             <select id="trackF1">
                 <option value="" id="trackCo">Choisir un circuit</option>
             </select>
         </div>
+
+        <!-- Risk selector -->
+        <div class="controlGroup">
+            <label for="riskFilter">Niveau de risque :</label>
+            <select id="riskFilter">
+                <option value="all">Tous les circuits</option>
+                <option value="5">Risque faible (<5 accident)</option>
+                <option value="10">Risque modéré (<10 accident)</option>
+                <option value="20">Risque élevé (<20 accidents)</option>
+                <option value="30">Risque extrême (<30 accidents)</option>
+            </select>
+        </div>
+
         <button id="reset">Reset</button>
     </div>
 </main>
