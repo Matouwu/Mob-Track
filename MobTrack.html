@@ -36,16 +36,16 @@
                     <p id="totalAccidents">0</p>
                 </div>
                 <div class="statCard">
-                    <h3>Total des collision</h3>
-                    <p id="totalCollisions">0</p>
-                </div>
-                <div class="statCard">
                     <h3>Circuit le plus dangereux</h3>
                     <p id="mostDangerousTrack">-</p>
                 </div>
                 <div class="statCard">
                     <h3>Année la plus accidentée</h3>
                     <p id="mostDangerousYear">-</p>
+                </div>
+                <div class="statCard">
+                    <h3>Session la plus accidentée</h3>
+                    <p id="mostDangerousSession">-</p>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
         <div id="country">
             <label>Pays :</label>
             <select id="countF1">
-                <option value="" id="countryCo">Choisir Pays</option>
+                <option value="" id="countryCo">Choisir un pays</option>
             </select>
         </div>
 
@@ -90,14 +90,26 @@
             <label for="riskFilter">Niveau de risque :</label>
             <select id="riskFilter">
                 <option value="all">Tous les circuits</option>
-                <option value="5">Risque faible (<5 accident)</option>
-                <option value="10">Risque modéré (<10 accident)</option>
-                <option value="20">Risque élevé (<20 accidents)</option>
-                <option value="30">Risque extrême (<30 accidents)</option>
+                <option value="0">Risque faible (0 accident)</option>
+                <option value="1">Risque modéré (1 accident)</option>
+                <option value="2">Risque élevé (2 accidents)</option>
+                <option value="3">Risque extrême (>=3 accidents)</option>
             </select>
         </div>
 
         <button id="reset">Reset</button>
+
+        <div class="weatherStats">
+            <h3>Conditions météorologiques</h3>
+            <div id="weatherChart" class="weatherChart">
+            </div>
+        </div>
+        <div class="timeline">
+            <h3>Chronologie des accidents</h3>
+            <div id="accidentsTimeline" class="accidentsTimeline">
+            </div>
+        </div>
+
     </div>
 </main>
 <footer>
