@@ -1,4 +1,4 @@
-/* Modern Dark Theme with Animations */
+/* Variables pour les couleurs et thèmes */
 :root {
     --primary: #ef4444;
     --primary-hover: #bd2b2b;
@@ -9,33 +9,28 @@
     --border: #171717;
 }
 
+/* Styles de base */
 body {
     margin: 0;
     padding: 0;
     background-color: var(--background);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Header Styles */
+/* En-tête */
 header {
     background-color: var(--surface);
     padding: 1rem 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
-a img {
-    height: 130px;
-}
 
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    color: var(--primary);
-    letter-spacing: 1px;
+header img {
+    height: 130px;
 }
 
 .authors {
@@ -44,7 +39,7 @@ header h1 {
     font-size: 0.9rem;
 }
 
-/* Main Content */
+/* Contenu principal */
 main {
     flex: 1;
     padding: 2rem;
@@ -56,7 +51,7 @@ main {
     box-sizing: border-box;
 }
 
-/* Map and Controls Layout */
+/* Mise en page de la carte et des contrôles */
 .content-wrapper {
     display: flex;
     gap: 2rem;
@@ -70,15 +65,15 @@ main {
     gap: 2rem;
 }
 
-/* Map Container Styles */
+/* Conteneur de carte */
 .map-container {
     width: 100%;
     aspect-ratio: 16/9;
     max-height: 70vh;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 #map {
@@ -86,12 +81,11 @@ main {
     height: 100%;
 }
 
-/* Stats Section */
+/* Section des statistiques */
 .stats-section {
     background-color: var(--surface);
     padding: 1.5rem;
     border-radius: 12px;
-    margin-top: 1rem;
 }
 
 .stats-grid {
@@ -120,7 +114,7 @@ main {
     color: var(--primary);
 }
 
-/* Controls Styles */
+/* Contrôles */
 .controls-container {
     background-color: var(--surface);
     padding: 1.5rem;
@@ -139,7 +133,7 @@ main {
     gap: 0.5rem;
 }
 
-/* Weather Stats */
+/* Statistiques météo */
 .weather-stats {
     margin-top: 1rem;
     padding-top: 1rem;
@@ -174,30 +168,7 @@ main {
     font-size: 0.8rem;
 }
 
-/* Timeline */
-.timeline {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-}
-
-.timeline-item {
-    display: flex;
-    gap: 1rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--border);
-}
-
-.timeline-date {
-    min-width: 100px;
-    color: var(--text-secondary);
-}
-
-.timeline-content {
-    flex: 1;
-}
-
-/* Pilots Section */
+/* Section des pilotes */
 .pilots-section {
     background-color: var(--surface);
     padding: 1.5rem;
@@ -217,8 +188,10 @@ main {
     gap: 1rem;
 }
 
+/* Adding new styles for pilot cards while keeping existing styles */
+
 .pilot-card {
-    background-color: var(--background);
+    background-color: var(--surface);
     padding: 1rem;
     border-radius: 8px;
     transition: transform 0.2s ease;
@@ -274,12 +247,23 @@ main {
     padding: 0.5rem;
 }
 
-.loading-text {
-    color: var(--text-secondary);
-    font-size: 0.8rem;
+.pilot-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-/* Form Controls */
+.pilot-name {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.pilot-stats {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Contrôles de formulaire */
 label {
     color: var(--text);
     font-weight: 500;
@@ -308,7 +292,7 @@ select:focus {
     box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }
 
-/* Leaflet Custom Styles */
+/* Styles Leaflet personnalisés */
 .leaflet-container {
     background-color: #1a1a1a !important;
 }
@@ -324,69 +308,28 @@ select:focus {
     background-color: var(--surface);
 }
 
-.circuit-popup {
+.circuit-popup, .accident-popup {
     padding: 8px;
 }
 
-.circuit-popup h3 {
+.circuit-popup h3, .accident-popup h3 {
     margin: 0 0 8px 0;
     color: var(--primary);
     font-size: 1.1rem;
 }
 
-.circuit-popup p {
+.circuit-popup p, .accident-popup p {
     margin: 4px 0;
     color: var(--text-secondary);
 }
 
-.accident-popup {
-    min-width: 200px;
-}
-
-.accident-popup h3 {
-    color: var(--primary);
-    margin: 0 0 8px 0;
-}
-
-.accident-popup p {
-    margin: 4px 0;
-}
-
-.accident-popup .pilot {
-    font-weight: bold;
-    color: var(--text);
-}
-
-.accident-popup .details {
-    color: var(--text-secondary);
-}
-
-/* Risk Level Indicators */
+/* Indicateurs de niveau de risque */
 .risk-low { color: #10b981; }
 .risk-moderate { color: #f59e0b; }
 .risk-high { color: #ef4444; }
 .risk-extreme { color: #7f1d1d; }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--surface);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
-}
-
-/* Responsive Design */
+/* Design responsive */
 @media (max-width: 1200px) {
     .content-wrapper {
         flex-direction: column;
@@ -410,21 +353,7 @@ select:focus {
         padding: 1rem;
     }
 
-    header h1 {
-        font-size: 1.5rem;
-    }
-
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .pilot-link {
-        flex-direction: column;
-    }
-
-    .pilot-image {
-        width: 100%;
-        height: 150px;
-        border-radius: 8px;
     }
 }

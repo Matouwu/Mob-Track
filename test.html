@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mob Track</title>
+    <title>Mob Track - Analyse des Circuits F1</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
     <script src="MobTrack.js"></script>
 </head>
 <body>
@@ -15,7 +19,8 @@
     <a href="test.html">
         <img src="Logo%20MobTrack.png" alt="Mob Track">
     </a>
-    <p class="authors">Projet réalisé par : Malcom B.</p </header>
+    <p class="authors">Projet réalisé par : Malcom B & Isabelle Z.</p>
+</header>
 
 <main>
     <div class="content-wrapper">
@@ -32,16 +37,8 @@
                         <p id="total-accidents">0</p>
                     </div>
                     <div class="stat-card">
-                        <h3>Circuit le plus dangereux</h3>
-                        <p id="most-dangerous-circuit">-</p>
-                    </div>
-                    <div class="stat-card">
                         <h3>Année la plus accidentée</h3>
                         <p id="most-dangerous-year">-</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Type de session le plus risqué</h3>
-                        <p id="most-dangerous-session">-</p>
                     </div>
                 </div>
             </div>
@@ -56,29 +53,24 @@
                         <option value="all">Tous types de sessions</option>
                     </select>
                 </div>
-                <div id="pilots-grid" class="pilots-grid">
-                    <!-- Les pilotes seront ajoutés dynamiquement ici -->
-                </div>
+                <div id="pilots-grid" class="pilots-grid"></div>
             </div>
         </div>
 
         <div class="controls-container">
-
-            <div id="country">
-                <!--Country selector -->
-                <label>Pays :</label>
-                <select id="countF1">
-                    <option value="" id="countryCo">Choisir Pays</option>
-                </select>
-            </div>
             <div class="control-group">
-                <label for="cir_f1">Circuits F1 :</label>
-                <select id="cir_f1">
-                    <option value="">Sélectionnez un circuit</option>
+                <label for="countF1">Pays :</label>
+                <select id="countF1">
+                    <option value="">Choisir un pays</option>
                 </select>
             </div>
 
-
+            <div class="control-group">
+                <label for="trackF1">Circuit :</label>
+                <select id="trackF1">
+                    <option value="">Sélectionner un circuit</option>
+                </select>
+            </div>
 
             <div class="control-group">
                 <label for="risk-filter">Niveau de risque :</label>
@@ -93,16 +85,8 @@
 
             <div class="weather-stats">
                 <h3>Conditions météorologiques</h3>
-                <div id="weather-chart" class="weather-chart">
-                    <!-- Le graphique sera ajouté ici -->
-                </div>
-            </div>
-
-            <div class="timeline">
-                <h3>Chronologie des accidents</h3>
-                <div id="accidents-timeline" class="accidents-timeline">
-                    <!-- La timeline sera ajoutée ici -->
-                </div>
+                <label for="weather-chart">Accident sous un temps :</label>
+                <div id="weather-chart" class="weather-chart"></div>
             </div>
         </div>
     </div>
