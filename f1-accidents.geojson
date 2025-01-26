@@ -1,0 +1,941 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "US-2012",
+        "pilot": "Valtteri Bottas",
+        "date": "2015-10-25",
+        "circuit": "Circuit of the Americas",
+        "description": "Collision avec Kimi Räikkönen dans les derniers tours",
+        "eventType": "Course",
+        "car": "Williams FW37",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-97.6341, 30.1328]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "HU-1986",
+        "pilot": "Kimi Räikkönen",
+        "date": "2009-07-26",
+        "circuit": "Hungaroring",
+        "description": "Sortie de piste dans le dernier secteur",
+        "eventType": "Course",
+        "car": "Ferrari F60",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.2506, 47.5830]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "PT-1972",
+        "pilot": "Damon Hill",
+        "date": "1993-09-26",
+        "circuit": "Autódromo do Estoril",
+        "description": "Collision avec Michael Schumacher",
+        "eventType": "Course",
+        "car": "Williams FW15C",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-9.3920, 38.7506]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "DE-1932",
+        "pilot": "Mika Häkkinen",
+        "date": "2000-07-30",
+        "circuit": "Hockenheimring",
+        "description": "Sortie de piste à haute vitesse dans la forêt",
+        "eventType": "Course",
+        "car": "McLaren MP4/15",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.5657, 49.3278]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "TR-2005",
+        "pilot": "Lewis Hamilton",
+        "date": "2010-05-30",
+        "circuit": "Intercity Istanbul Park",
+        "description": "Collision avec son coéquipier Jenson Button",
+        "eventType": "Course",
+        "car": "McLaren MP4-25",
+        "fatal": false,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [29.4052, 40.9517]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "SA-2021",
+        "pilot": "Max Verstappen",
+        "date": "2021-12-05",
+        "circuit": "Jeddah Corniche Circuit",
+        "description": "Collision avec le mur dans le dernier virage en qualifications",
+        "eventType": "Qualifications",
+        "car": "Red Bull RB16B",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [39.1039, 21.6319]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "FR-1969",
+        "pilot": "Jean Alesi",
+        "date": "1999-06-27",
+        "circuit": "Circuit Paul Ricard",
+        "description": "Sortie de piste dans la courbe de Signes",
+        "eventType": "Course",
+        "car": "Sauber C18",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.7916, 43.2506]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "QA-2004",
+        "pilot": "Valtteri Bottas",
+        "date": "2021-11-21",
+        "circuit": "Losail International Circuit",
+        "description": "Crevaison à haute vitesse",
+        "eventType": "Course",
+        "car": "Mercedes W12",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [51.4542, 25.4882]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "FR-1960",
+        "pilot": "Michael Schumacher",
+        "date": "2002-07-21",
+        "circuit": "Circuit de Nevers Magny-Cours",
+        "description": "Sortie de piste dans la chicane",
+        "eventType": "Course",
+        "car": "Ferrari F2002",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1639, 46.8642]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "AU-1996",
+        "pilot": "Ralf Schumacher",
+        "date": "2002-03-03",
+        "circuit": "Albert Park Circuit",
+        "description": "Collision spectaculaire avec Rubens Barrichello au départ",
+        "eventType": "Course",
+        "car": "Williams FW24",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [144.9683, -37.8497]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "MX-1962",
+        "pilot": "Charles Leclerc",
+        "date": "2019-10-27",
+        "circuit": "Autódromo Hermanos Rodríguez",
+        "description": "Contact avec Max Verstappen au premier virage",
+        "eventType": "Course",
+        "car": "Ferrari SF90",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-99.0907, 19.4042]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "US-2022",
+        "pilot": "Max Verstappen",
+        "date": "2022-05-08",
+        "circuit": "Miami International Autodrome",
+        "description": "Sortie de piste pendant les essais libres",
+        "eventType": "Essais",
+        "car": "Red Bull RB18",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-80.2389, 25.9581]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "MC-1929",
+        "pilot": "Ayrton Senna",
+        "date": "1988-05-15",
+        "circuit": "Circuit de Monaco",
+        "description": "Accident au virage de Portier alors qu'il menait la course",
+        "eventType": "Course",
+        "car": "McLaren MP4/4",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4233, 43.7347]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "CA-1978",
+        "pilot": "Michael Schumacher",
+        "date": "1999-06-13",
+        "circuit": "Circuit Gilles-Villeneuve",
+        "description": "Collision avec le Mur des Champions",
+        "eventType": "Course",
+        "car": "Ferrari F399",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.5228, 45.5153]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "IT-1922",
+        "pilot": "Mika Häkkinen",
+        "date": "2000-09-10",
+        "circuit": "Autodromo Nazionale Monza",
+        "description": "Problème mécanique et sortie de piste",
+        "eventType": "Course",
+        "car": "McLaren MP4/15",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2851, 45.6202]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "DE-1927",
+        "pilot": "Michael Schumacher",
+        "date": "2012-07-22",
+        "circuit": "Nürburgring",
+        "description": "Sortie de piste dans les essais",
+        "eventType": "Essais",
+        "car": "Mercedes F1 W03",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.9470, 50.3356]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "PT-2008",
+        "pilot": "Valtteri Bottas",
+        "date": "2020-10-25",
+        "circuit": "Autódromo Internacional do Algarve",
+        "description": "Sortie de piste dans le dernier secteur",
+        "eventType": "Course",
+        "car": "Mercedes W11",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.6267, 37.2320]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "IT-1974",
+        "pilot": "Valtteri Bottas",
+        "date": "2020-09-13",
+        "circuit": "Autodromo Internazionale del Mugello",
+        "description": "Impliqué dans un carambolage au restart",
+        "eventType": "Course",
+        "car": "Mercedes W11",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.3719, 43.9978]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "MY-1999",
+        "pilot": "Kimi Räikkönen",
+        "date": "2001-03-18",
+        "circuit": "Sepang International Circuit",
+        "description": "Sortie de piste dans les essais",
+        "eventType": "Essais",
+        "car": "Sauber C20",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [101.7382, 2.7601]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "CN-2004",
+        "pilot": "Sebastian Vettel",
+        "date": "2009-04-19",
+        "circuit": "Shanghai International Circuit",
+        "description": "Accident sous la pluie",
+        "eventType": "Course",
+        "car": "Red Bull RB5",
+        "fatal": false,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.2219, 31.3389]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "GB-1947",
+        "pilot": "Felipe Massa",
+        "date": "2008-07-06",
+        "circuit": "Silverstone Circuit",
+        "description": "Tête-à-queue sous la pluie",
+        "eventType": "Course",
+        "car": "Ferrari F2008",
+        "fatal": false,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.0174, 52.0733]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "SG-2008",
+        "pilot": "Max Verstappen",
+        "date": "2017-09-17",
+        "circuit": "Marina Bay Street Circuit",
+        "description": "Collision au départ avec Räikkönen et Vettel",
+        "eventType": "Course",
+        "car": "Red Bull RB13",
+        "fatal": false,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8641, 1.2914]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "RU-2014",
+        "pilot": "Max Verstappen",
+        "date": "2018-09-30",
+        "circuit": "Sochi Autodrom",
+        "description": "Contact avec Sergio Pérez",
+        "eventType": "Course",
+        "car": "Red Bull RB14",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [39.9578, 43.4057]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BE-1925",
+        "pilot": "David Coulthard",
+        "date": "1998-08-30",
+        "circuit": "Circuit de Spa-Francorchamps",
+        "description": "Accident au premier tour sous la pluie avec plusieurs voitures",
+        "eventType": "Course",
+        "car": "McLaren MP4/13",
+        "fatal": false,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.9714, 50.4372]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "AT-1969",
+        "pilot": "Valtteri Bottas",
+        "date": "2018-07-01",
+        "circuit": "Red Bull Ring",
+        "description": "Problème hydraulique et abandon",
+        "eventType": "Course",
+        "car": "Mercedes W09",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.7647, 47.2197]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "AE-2009",
+        "pilot": "Jenson Button",
+        "date": "2012-11-04",
+        "circuit": "Yas Marina Circuit",
+        "description": "Contact avec Paul di Resta",
+        "eventType": "Course",
+        "car": "McLaren MP4-27",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [54.6031, 24.4672]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "NL-1948",
+        "pilot": "Max Verstappen",
+        "date": "2020-09-05",
+        "circuit": "Circuit Zandvoort",
+        "description": "Sortie de piste dans les essais",
+        "eventType": "Essais",
+        "car": "Red Bull RB16",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.5419, 52.3882]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "MC-1929",
+        "pilot": "Lorenzo Bandini",
+        "date": "1967-05-07",
+        "circuit": "Circuit de Monaco",
+        "description": "Accident mortel à la chicane du port. La voiture a pris feu après avoir heurté les barrières",
+        "eventType": "Course",
+        "car": "Ferrari 312",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4233, 43.7347]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "DE-1932",
+        "pilot": "Jim Clark",
+        "date": "1968-04-07",
+        "circuit": "Hockenheimring",
+        "description": "Sortie de piste fatale dans la section forestière pendant une course de F2",
+        "eventType": "Course F2",
+        "car": "Lotus 48",
+        "fatal": true,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.5657, 49.3278]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "IT-1922",
+        "pilot": "Ronnie Peterson",
+        "date": "1978-09-10",
+        "circuit": "Autodromo Nazionale Monza",
+        "description": "Accident mortel au premier virage après le départ, collision multiple",
+        "eventType": "Course",
+        "car": "Lotus 78",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2851, 45.6202]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BE-1925",
+        "pilot": "Gilles Villeneuve",
+        "date": "1982-05-08",
+        "circuit": "Circuit de Spa-Francorchamps",
+        "description": "Collision fatale avec la March de Jochen Mass pendant les qualifications",
+        "eventType": "Qualifications",
+        "car": "Ferrari 126C2",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.9714, 50.4372]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "CA-1978",
+        "pilot": "Riccardo Paletti",
+        "date": "1982-06-13",
+        "circuit": "Circuit Gilles-Villeneuve",
+        "description": "Collision fatale au départ avec la Ferrari de Didier Pironi",
+        "eventType": "Course",
+        "car": "Osella FA1C",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.5228, 45.5153]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "FR-1969",
+        "pilot": "Elio de Angelis",
+        "date": "1986-05-15",
+        "circuit": "Circuit Paul Ricard",
+        "description": "Accident mortel lors d'essais privés, rupture de l'aileron arrière",
+        "eventType": "Essais",
+        "car": "Brabham BT55",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.7916, 43.2506]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "IT-1953",
+        "pilot": "Roland Ratzenberger",
+        "date": "1994-04-30",
+        "circuit": "Autodromo Enzo e Dino Ferrari",
+        "description": "Accident mortel au virage Villeneuve suite à une défaillance de l'aileron avant",
+        "eventType": "Qualifications",
+        "car": "Simtek S941",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.7167, 44.3441]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "IT-1953",
+        "pilot": "Ayrton Senna",
+        "date": "1994-05-01",
+        "circuit": "Autodromo Enzo e Dino Ferrari",
+        "description": "Accident mortel au virage Tamburello, rupture de la colonne de direction",
+        "eventType": "Course",
+        "car": "Williams FW16",
+        "fatal": true,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.7170, 44.3443]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "JP-1962",
+        "pilot": "Jules Bianchi",
+        "date": "2014-10-05",
+        "circuit": "Suzuka International Racing Course",
+        "description": "Accident mortel au virage Dunlop sous forte pluie, collision avec une grue",
+        "eventType": "Course",
+        "car": "Marussia MR03",
+        "fatal": true,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [136.5339, 34.8431]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "GB-1947",
+        "pilot": "Mark Webber",
+        "date": "2003-07-20",
+        "circuit": "Silverstone Circuit",
+        "description": "Spectaculaire accident aérien, la voiture s'est envolée après avoir percuté l'arrière d'une autre voiture",
+        "eventType": "Course",
+        "car": "Jaguar R4",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.0174, 52.0733]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "HU-1986",
+        "pilot": "Felipe Massa",
+        "date": "2009-07-25",
+        "circuit": "Hungaroring",
+        "description": "Frappé au casque par un ressort détaché de la voiture de Barrichello",
+        "eventType": "Qualifications",
+        "car": "Ferrari F60",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.2486, 47.5789]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BE-1925",
+        "pilot": "Robert Kubica",
+        "date": "2007-06-10",
+        "circuit": "Circuit de Spa-Francorchamps",
+        "description": "Violent accident dans le Raidillon de l'Eau Rouge",
+        "eventType": "Course",
+        "car": "BMW Sauber F1.07",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.9721, 50.4371]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "MC-1929",
+        "pilot": "Sergio Perez",
+        "date": "2011-05-28",
+        "circuit": "Circuit de Monaco",
+        "description": "Violent accident dans le tunnel pendant les qualifications",
+        "eventType": "Qualifications",
+        "car": "Sauber C30",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4235, 43.7349]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "IT-1922",
+        "pilot": "Lewis Hamilton",
+        "date": "2021-09-12",
+        "circuit": "Autodromo Nazionale Monza",
+        "description": "Collision avec Max Verstappen, la Red Bull passant au-dessus de la Mercedes",
+        "eventType": "Course",
+        "car": "Mercedes W12",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.2853, 45.6204]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BH-2004",
+        "pilot": "Romain Grosjean",
+        "date": "2020-11-29",
+        "circuit": "Bahrain International Circuit",
+        "description": "Violent accident avec explosion et incendie au premier tour",
+        "eventType": "Course",
+        "car": "Haas VF-20",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [50.5111, 26.0325]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "CN-2004",
+        "pilot": "Kimi Räikkönen",
+        "date": "2007-10-07",
+        "circuit": "Shanghai International Circuit",
+        "description": "Sortie de piste dans l'entrée des stands sur pneus usés",
+        "eventType": "Course",
+        "car": "Ferrari F2007",
+        "fatal": false,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.2219, 31.3389]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "SG-2008",
+        "pilot": "Nelson Piquet Jr",
+        "date": "2008-09-28",
+        "circuit": "Marina Bay Street Circuit",
+        "description": "Crash volontaire dans le mur ('Crashgate')",
+        "eventType": "Course",
+        "car": "Renault R28",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8641, 1.2914]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "AT-1969",
+        "pilot": "Niki Lauda",
+        "date": "1976-08-01",
+        "circuit": "Red Bull Ring",
+        "description": "Sortie de piste et collision avec le rail",
+        "eventType": "Course",
+        "car": "Ferrari 312T2",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.7647, 47.2197]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BR-1940",
+        "pilot": "Martin Brundle",
+        "date": "1994-05-29",
+        "circuit": "Autódromo José Carlos Pace - Interlagos",
+        "description": "Accident spectaculaire au premier virage",
+        "eventType": "Course",
+        "car": "McLaren MP4/9",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-46.6997, -23.7036]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "ES-1991",
+        "pilot": "Fernando Alonso",
+        "date": "2016-03-20",
+        "circuit": "Circuit de Barcelona-Catalunya",
+        "description": "Violent accident après contact avec Esteban Gutiérrez",
+        "eventType": "Course",
+        "car": "McLaren MP4-31",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2619, 41.5709]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BR-1973",
+        "pilot": "Felipe Massa",
+        "date": "2003-04-06",
+        "circuit": "Autódromo Internacional Nelson Piquet",
+        "description": "Sortie de piste dans le dernier virage",
+        "eventType": "Course",
+        "car": "Sauber C22",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-43.3949, -22.9766]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "US-2023",
+        "pilot": "Max Verstappen",
+        "date": "2023-11-18",
+        "circuit": "Las Vegas Street Circuit",
+        "description": "Contact avec le mur dans la section du casino",
+        "eventType": "Essais",
+        "car": "Red Bull RB19",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-115.1728, 36.1147]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "US-2022",
+        "pilot": "Max Verstappen",
+        "date": "2022-05-08",
+        "circuit": "Miami International Autodrome",
+        "description": "Sortie de piste dans le virage 14",
+        "eventType": "Course",
+        "car": "Red Bull RB18",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-80.2389, 25.9581]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "BR-1940",
+        "pilot": "Mark Webber",
+        "date": "2003-04-06",
+        "circuit": "Autódromo José Carlos Pace - Interlagos",
+        "description": "Accident violent dans la ligne droite des stands",
+        "eventType": "Course",
+        "car": "Jaguar R4",
+        "fatal": false,
+        "weather": "Dry"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-46.6997, -23.7036]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuitId": "JP-1962",
+        "pilot": "Jules Bianchi",
+        "date": "2014-10-05",
+        "circuit": "Suzuka International Racing Course",
+        "description": "Collision fatale avec une grue de dépannage au virage Dunlop",
+        "eventType": "Course",
+        "car": "Marussia MR03",
+        "fatal": true,
+        "weather": "Wet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [136.5339, 34.8431]
+      }
+    }
+  ]
+}
