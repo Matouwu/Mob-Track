@@ -4,9 +4,7 @@ let idCount='';  //Country selected by the user
 let idTrack;            //Track selected by the user
 let map;
 let marker;
-let nbAcci;
-let nbColli;
-let totalRisk;
+let risk = null;
 let dangerousNb=0;
 let dangerousTrack;
 let data;
@@ -22,20 +20,39 @@ function createLayer(data) {
  *     Selector section
  * ========================== */
 
-function loadCountry(locationData, countryData) {
+function loadCountry(locationData, countriesData, riskTrack) {
     const select = document.getElementById("countF1");
+    for (let i=0; i <= 27; i++) {   //Remove all option selected before
+        select.remove(1);
+    }
     let countCo = 0;
 
-    const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
-    countryNames.forEach(country => {
-        countCo++;
-        const option = document.createElement("option");
-        option.value = country;
-        option.textContent = countryData[country.toUpperCase()];
-        select.appendChild(option);
-    })
-    const countryCo = document.getElementById("countryCo");
-    countryCo.textContent = countryCo.textContent + " (" + countCo + ")";
+    if(risk == null){
+        const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
+        countryNames.forEach(country => {
+            countCo++;
+            const option = document.createElement("option");
+            option.value = country;
+            option.textContent = countriesData[country.toUpperCase()];
+            select.appendChild(option);
+        })
+        const countryCo = document.getElementById("countryCo");
+        countryCo.textContent ="Choisir un pays (" + countCo + ")";
+    }
+    else{
+        const riskName = riskTrack.filter(e => e.totalRisk > 20 && e.totalRisk <= risk);
+        console.log(riskName);
+        const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
+        countryNames.forEach(country => {
+            countCo++;
+            const option = document.createElement("option");
+            option.value = country;
+            option.textContent = countriesData[country.toUpperCase()];
+            select.appendChild(option);
+        })
+        const countryCo = document.getElementById("countryCo");
+        countryCo.textContent = "Choisir un pays (" + countCo + ")";
+    }
 }
 
 function loadTrack(locationData) {
@@ -102,12 +119,14 @@ function selectTrack(locationData) {
     }
 }
 
-// function selectRisk(locationData, riskTrack){
-//     let selectedRisk = document.getElementById("riskFilter");
-//     selectedRisk.onchange = e=>{
-//         idTrack = e.target.value;
-//     }
-// }
+function selectRisk(locationData, countriesData, riskTrack){
+    let selectedRisk = document.getElementById("riskFilter");
+    selectedRisk.onchange = e=>{
+        risk = e.target.value;
+        loadCountry(locationData, countriesData, riskTrack);
+        loadTrack(locationData);
+    }
+}
 
 
 /* ==========================
@@ -121,38 +140,28 @@ function statistics( accidents, collisions, mostDangerous){
 }
 
 
-async function loadRiskTrack(trackAPIData, listTrackId, riskTrack) {
-    for (const trackId of listTrackId) {
-        const statusResp = await fetch (`http://ergast.com/api/f1/circuits/${trackId}/status.json`);
-        const statData = await statusResp.json();
-
-        const statName= trackAPIData.MRData.CircuitTable.Circuits.find(e => e.circuitId === trackId).circuitName;
-        nbAcci = statData.MRData.StatusTable.Status[0].count;
-        nbColli =statData.MRData.StatusTable.Status[1].count;
+function loadDangerousTrack(trackAPIData, statTrackData, riskTrack){
+    let trackId = statTrackData.MRData.StatusTable.forEach( id => {
+        const statId = id.circuitId
+        const acci = id.Status.find(e => e.statusId === "3").count;
+        const colli = id.Status.find(e => e.statusId === "4").count;
         riskTrack.push({
-            id: trackId,
-            name: statName,
-            accidents: parseInt(nbAcci),
-            collisions: parseInt(nbColli),
-            totalRisk: parseInt(nbAcci) + parseInt(nbColli)
+            id: statId,
+            name: trackAPIData.MRData.CircuitTable.Circuits.find(e => e.circuitId === statId).circuitName,
+            accidents: parseInt(acci),
+            collisions: parseInt(colli),
+            totalRisk: parseInt(acci) + parseInt(colli)
         })
-    }
-}
-
-async function loadDangerousTrack(trackAPIData, riskTrack, listTrackId){
-    await loadRiskTrack(trackAPIData, listTrackId, riskTrack);
-    console.log("DangerousTrack :", riskTrack);
+    })
 
     riskTrack.forEach(track => {
         if(track.totalRisk > dangerousNb){
-            dangerousNb = track.totalRisk;
+            dangerousNb = track.accidents;
             dangerousTrack = track;
         }
     })
     console.log("DangerousTrack :", dangerousTrack);
 }
-
-
 
 
 /* ==========================
@@ -189,15 +198,18 @@ window.onload = async () => {
         const locationResponse = await fetch("data/f1-locations.geojson");
         const countriesResponse = await fetch("data/countries-FR.json");
 
+        const accidentsResponse = await fetch("data/f1-accidents.geojson");
         const trackAPIResponse = await fetch("data/trackAPI.json");
-        const statusResponse = await fetch("data/status.json");
+        const statTrackResponse = await fetch("data/statTrack.json");
+
 
         const trackData = await tracksResponse.json();
         const locationData = await locationResponse.json();
         const countriesData = await countriesResponse.json();
 
+        const accidentsData = await accidentsResponse.json();
         const trackAPIData = await trackAPIResponse.json();
-        const statusData = await statusResponse.json();
+        const statTrackData = await statTrackResponse.json();
 
 
         let geoLayer = createLayer(trackData).addTo(map);
@@ -206,8 +218,8 @@ window.onload = async () => {
         //* ====== Statistic section ====== *//
         // ================================= //
 
-        const accidents = statusData.MRData.StatusTable.Status[0].count;
-        const collisions = statusData.MRData.StatusTable.Status[1].count;
+        const accidents = acci.MRData.TotalAccident;
+        const collisions = statTrackData.MRData.TotalCollision;
         //List of every track with there number of accidents and collision
         let riskTrack = [];
         let listTrackId = [ "adelaide", "ain-diab", "aintree", "albert_park", "americas", "anderstorp",
@@ -220,7 +232,7 @@ window.onload = async () => {
             "sebring", "sepang", "shanghai", "silverstone", "sochi", "spa","suzuka","tremblant","valencia","vegas",
             "villeneuve","watkins_glen","yas_marina","yeongam","zandvoort","zeltweg","zolder"];
 
-        await loadDangerousTrack(trackAPIData, riskTrack, listTrackId);
+        loadDangerousTrack(trackAPIData, statTrackData, riskTrack);
         const mostDangerous = trackAPIData.MRData.CircuitTable.Circuits.find(e => e.circuitId === dangerousTrack.id).circuitName;
         console.log("DangerousTrack :", mostDangerous);
 
@@ -230,7 +242,7 @@ window.onload = async () => {
         //* ====== Selector section ====== *//
         // ================================ //
 
-        //Load all country prefix from locationData and the name from countryData
+        //Load all country prefix from locationData and the name from countriesData
         loadCountry(locationData, countriesData);
         //Load all track from locationData
         loadTrack(locationData);
@@ -240,7 +252,7 @@ window.onload = async () => {
         selectCountry(locationData);
         // risk selector
         console.log("riskTrack :", riskTrack);
-        selectRisk(locationData, riskTrack);
+        selectRisk(locationData, countriesData, riskTrack);
 
 
         document.getElementById("reset")
