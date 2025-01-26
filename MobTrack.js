@@ -5,104 +5,11 @@ let selectedTrack;            //Track selected by the user
 let selectedRisk="all";
 let map;
 let marker;
-let risk = null;
 let data;
 let listTrackstat ={};
 
-/* ==========================
- *       Layer section
- * ========================== */
-function createLayer(trackData, selectedTrack = null, selectedRisk = "all") {
-    return L.geoJSON(trackData, {
-        // filter: function(feature) {
-        //     if (selectedTrack && feature.properties.Name !== selectedTrack) return false;
-        //
-        //     if (selectedRisk !== "all") {
-        //         const accidents = feature.properties.accidents || 0;
-        //         const risk = getCircuitRiskLevel(accidents).level;
-        //         if (risk !== selectedRisk) return false;
-        //     }
-        //
-        //     return true;
-        // },
-        // style: function(feature) {
-        //     const accidents = feature.properties.accidents || 0;
-        //     const risk = getCircuitRiskLevel(accidents);
-        //
-        //     let color;
-        //     switch (risk.level) {
-        //         case "low": color = "#10b981"; break;
-        //         case "moderate": color = "#f59e0b"; break;
-        //         case "high": color = "#ef4444"; break;
-        //         case "extreme": color = "#7f1d1d"; break;
-        //         default: color = "#2c5282";
-        //     }
-        //
-        //     return {
-        //         color: color,
-        //         weight: 3,
-        //         opacity: 1,
-        //         fillColor: color,
-        //         fillOpacity: 0.7
-        //     };
-        // },
-        // onEachFeature: function(feature, layer) {
-        //     const accidents = feature.properties.accidents || 0;
-        //     const risk = getCircuitRiskLevel(accidents);
-        //
-        //     const popupContent = `
-        //         <div class="circuit-popup">
-        //             <h3>${feature.properties.Name}</h3>
-        //             <p>Longueur : ${feature.properties.length || 'N/A'}</p>
-        //             <p>Accidents : ${accidents}</p>
-        //             <p class="risk-${risk.level}">${risk.text}</p>
-        //         </div>
-        //     `;
-        //     layer.bindPopup(popupContent);
-        //
-        //     layer.on({
-        //         mouseover: function(e) {
-        //             const layer = e.target;
-        //             layer.setStyle({
-        //                 weight: 5,
-        //                 fillOpacity: 0.9
-        //             });
-        //             layer.bringToFront();
-        //         },
-        //         mouseout: function(e) {
-        //             const layer = e.target;
-        //             circuitsLayer.resetStyle(layer);
-        //         }
-        //     });
-        // }
-    });
-}
-
-
-function createAccidentMarker(feature,latlng) {
-    const popupContent =`
-        <div class="accident-popup">
-            <h3>Détails de l'accident</h3>
-            <p class="pilot">Pilote : ${feature.properties.pilot}</p>
-            <p class="details">Voiture : ${feature.properties.car}</p>
-            <p class="details">Date : ${feature.properties.date}</p>
-            <p class="details">Circuit : ${feature.properties.circuit}</p>
-            <p class="details">Type de session : ${feature.properties.eventType}</p>
-            <p class="details">Conditions météo : ${feature.properties.weather}</p>
-            <p class="details">Description : ${feature.properties.description}</p>
-            <p class="details">Mortel : ${feature.properties.fatal}</p>
-        </div>
-    `;
-
-    return L.circleMarker(latlng, {
-        radius: 8,
-        fillColor: "#ff4444",
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8
-    }).bindPopup(popupContent);
-}
+let trackLayer;
+let accidentsLayer;
 
 
 
@@ -257,21 +164,6 @@ function selectRisk(locationData,accidentsData, countriesData){
         loadCountry(locationData, countriesData,selectedRisk);
         loadTrack(locationData);
     }
-    //
-    // let accidentsLayer = L.geoJSON(accidentsData, {
-    //     pointToLayer: createAccidentMarker
-    // }).addTo(map);
-    // let riskZonesLayer = L.geoJSON(riskZonesData, {
-    //     style: getRiskZoneStyle,
-    //     onEachFeature: (feature, layer) => {
-    //         layer.bindPopup(`
-    //             <strong>Zone à risque</strong><br>
-    //             ${feature.properties.description || 'Zone dangereuse'}
-    //         `);
-    //     }
-    // }).addTo(map);
-    //
-    // populateCircuitSelector(tracksData, selectedRisk);
 }
 
 
@@ -312,7 +204,6 @@ function statistics(accidentsData, tracksData) {
 
     // type of the most risky session
     const sessionAccidents = {};
-    console.log("sessionAccidents:", sessionAccidents);
     accidentsData.features.forEach(accident => {
         const session = accident.properties.eventType;
         sessionAccidents[session] = (sessionAccidents[session] || 0) + 1;
@@ -369,6 +260,87 @@ function updateAccidentsTimeline(accidentsData) {
 }
 
 
+/* ==========================
+ *       Layer section
+ * ========================== */
+
+
+function trackMapLayer(trackData,accidentsData) {
+    // track layer
+    trackLayer = L.geoJSON(trackData,{
+        onEachFeature: bindTrackPopup
+    }).addTo(map);
+
+    // accidents layer
+    accidentsLayer = L.geoJSON(accidentsData.features,{
+        pointToLayer: function (feature, latlng) {
+            return createAccidentMarker(feature, latlng);
+        }
+    }).addTo(map)
+
+}
+
+function createAccidentMarker(feature, latlng) {
+    const popupContent =`
+        <div class="accident-popup">
+            <h3>Détails de l'accident</h3>
+            <p class="pilot">Pilote : ${feature.properties.pilot}</p>
+            <p class="details">Voiture : ${feature.properties.car}</p>
+            <p class="details">Date : ${feature.properties.date}</p>
+            <p class="details">Circuit : ${feature.properties.circuit}</p>
+            <p class="details">Type de session : ${feature.properties.eventType}</p>
+            <p class="details">Conditions météo : ${feature.properties.weather}</p>
+            <p class="details">Description : ${feature.properties.description}</p>
+            <p class="details">Mortel : ${feature.properties.fatal}</p>
+        </div>
+    `;
+
+    const circle = L.circleMarker(latlng, {
+        radius: 8,
+        fillColor: "#ff4444",
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+    }).bindPopup(popupContent);
+
+    circle.on('mouseover', function() {
+        circle.setStyle({
+            weight: 5,
+            fillOpacity: 0.7
+        });
+        circle.bringToFront();
+    });
+    circle.on('mouseout', function() {
+        circle.setStyle({
+            weight: 2,
+            fillOpacity: 0.4
+        });
+    });
+    return circle;
+}
+
+function bindTrackPopup(feature, layer) {
+    const popupContent = `
+        <div class="circuit-popup">
+            <h3>${feature.properties.Name}</h3>
+            <p>Pays: ${feature.properties.Location}</p>
+            <p>Création: ${feature.properties.opened}</p>
+            <p>longueur: ${feature.properties.length}</p>
+        </div>
+    `;
+    layer.bindPopup(popupContent);
+    layer.on('mouseover', function() {
+
+        layer.openPopup();
+    });
+    layer.on('mouseout', function() {
+        layer.closePopup();
+    })
+}
+
+
+
 
 window.onload = async () => {
 
@@ -377,7 +349,7 @@ window.onload = async () => {
         zoom: 6
     })
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 15,
+        maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     }).addTo(map);
 
@@ -393,16 +365,14 @@ window.onload = async () => {
         const accidentsData = await accidentsResponse.json();
 
 
-        // let geoLayer = L.geoJSON(trackData).addTo(map);
-        let tracksLayer = createLayer(trackData).addTo(map);
-
+        trackMapLayer(trackData,accidentsData);
             // ================================= //
             //* ====== Statistic section ====== *//
             // ================================= //
 
         //list of every track with there number of accident
         listTrackstat = statistics(accidentsData, trackData);
-        console.log("listTrackstat:", listTrackstat);
+
             // ================================ //
             //* ====== Selector section ====== *//
             // ================================ //
