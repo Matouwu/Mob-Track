@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
+<html lang="fr">
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Mob Track</title>
+    <title>Mob Track - Analyse des Circuits F1</title>
     <link rel="icon" href="data:,">
     <!-- add leaflet CSS here -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -55,7 +56,7 @@
             <h2>Pilotes impliqués dans des accidents</h2>
             <div class="filters">
                 <select id="yearFilter">
-                    <option value="all">Toutes les années</option>
+                    <option value="all">Toutes les décennies</option>
                 </select>
                 <select id="sessionFilter">
                     <option value="all">Tous types de sessions</option>
@@ -68,7 +69,6 @@
 
     <div class = "controlsContainer">
         <h3>Summary</h3>
-
         <!-- Country selector -->
         <div id="country">
             <label>Pays :</label>
@@ -76,7 +76,6 @@
                 <option value="" id="countryCo">Choisir un pays</option>
             </select>
         </div>
-
         <!-- Track selector -->
         <div id="track">
             <label>Circuits F1 :</label>
@@ -84,7 +83,6 @@
                 <option value="" id="trackCo">Choisir un circuit</option>
             </select>
         </div>
-
         <!-- Risk selector -->
         <div class="controlGroup">
             <label for="riskFilter">Niveau de risque :</label>
@@ -93,7 +91,7 @@
                 <option value="0">Risque faible (0 accident)</option>
                 <option value="1">Risque modéré (1 accident)</option>
                 <option value="2">Risque élevé (2 accidents)</option>
-                <option value="3">Risque extrême (>=3 accidents)</option>
+                <option value="3">Risque extrême (3+ accidents)</option>
             </select>
         </div>
 

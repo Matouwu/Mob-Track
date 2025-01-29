@@ -171,7 +171,6 @@ main{
     gap: 0.5rem;
 }
 
-
 div h3{
     text-align: center;
     color: var(--text);
@@ -203,4 +202,63 @@ select:hover {
 select:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+/* Weather Stats */
+
+.weatherStats {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.weatherChart {
+    margin-top: 1rem;
+}
+
+.weatherBar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    gap: 1rem;
+}
+
+.weatherLabel {
+    width: 100px;
+    text-align: right;
+}
+
+.weatherValue {
+    background-color: var(--primary);
+    height: 20px;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    color: white;
+    font-size: 0.8rem;
+}
+
+/* Timeline */
+.timeline {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.timelineItem {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.timelineDate {
+    min-width: 100px;
+    color: var(--text-secondary);
+}
+
+.timelineContent {
+    flex: 1;
 }
