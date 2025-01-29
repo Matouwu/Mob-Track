@@ -1,0 +1,243 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Albert Park",
+        "zone_name": "Turn 3",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Virage rapide avec zone de dégagement limitée"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[144.9684, -37.8470], [144.9688, -37.8474], [144.9690, -37.8472], [144.9686, -37.8468], [144.9684, -37.8470]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Sepang",
+        "zone_name": "Turn 15",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Virage rapide en sortie de courbe"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[101.7380, 2.7601], [101.7384, 2.7605], [101.7386, 2.7603], [101.7382, 2.7599], [101.7380, 2.7601]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Shanghai",
+        "zone_name": "Turn 1-2",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Séquence de virages rapides"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[121.2184, 31.3389], [121.2188, 31.3393], [121.2190, 31.3391], [121.2186, 31.3387], [121.2184, 31.3389]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Sakhir",
+        "zone_name": "Turn 12",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Freinage important après ligne droite"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[50.5111, 26.0319], [50.5115, 26.0323], [50.5117, 26.0321], [50.5113, 26.0317], [50.5111, 26.0319]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Catalunya",
+        "zone_name": "Turn 3",
+        "risk_level": "high",
+        "accidents_count": 1,
+        "description": "Virage rapide avec compression"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[2.2584, 41.5691], [2.2588, 41.5695], [2.2590, 41.5693], [2.2586, 41.5689], [2.2584, 41.5691]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Monaco",
+        "zone_name": "Tunnel",
+        "risk_level": "high",
+        "accidents_count": 2,
+        "description": "Changement de luminosité et adhérence"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[7.4233, 43.7347], [7.4237, 43.7351], [7.4239, 43.7349], [7.4235, 43.7345], [7.4233, 43.7347]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Silverstone",
+        "zone_name": "Copse",
+        "risk_level": "high",
+        "accidents_count": 1,
+        "description": "Virage très rapide"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-1.0166, 52.0786], [-1.0162, 52.0790], [-1.0160, 52.0788], [-1.0164, 52.0784], [-1.0166, 52.0786]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Hockenheim",
+        "zone_name": "Motodrom",
+        "risk_level": "medium",
+        "accidents_count": 1,
+        "description": "Section technique avec murs proches"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[8.5657, 49.3278], [8.5661, 49.3282], [8.5663, 49.3280], [8.5659, 49.3276], [8.5657, 49.3278]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Hungaroring",
+        "zone_name": "Turn 4",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Virage en aveugle"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[19.2505, 47.5839], [19.2509, 47.5843], [19.2511, 47.5841], [19.2507, 47.5837], [19.2505, 47.5839]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Spa-Francorchamps",
+        "zone_name": "Eau Rouge/Raidillon",
+        "risk_level": "extreme",
+        "accidents_count": 3,
+        "description": "Compression forte et visibilité limitée"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[5.9714, 50.4372], [5.9718, 50.4376], [5.9720, 50.4374], [5.9716, 50.4370], [5.9714, 50.4372]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Monza",
+        "zone_name": "Parabolica",
+        "risk_level": "high",
+        "accidents_count": 3,
+        "description": "Virage rapide avec sortie dangereuse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[9.2847, 45.6198], [9.2851, 45.6202], [9.2853, 45.6200], [9.2849, 45.6196], [9.2847, 45.6198]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Marina Bay",
+        "zone_name": "Turn 22",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Virage sous tunnel avec murs proches"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[103.8641, 1.2914], [103.8645, 1.2918], [103.8647, 1.2916], [103.8643, 1.2912], [103.8641, 1.2914]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Suzuka",
+        "zone_name": "130R",
+        "risk_level": "high",
+        "accidents_count": 1,
+        "description": "Virage très rapide"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[136.5337, 34.8429], [136.5341, 34.8433], [136.5343, 34.8431], [136.5339, 34.8427], [136.5337, 34.8429]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Yas Marina",
+        "zone_name": "Turn 19",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Chicane rapide sous l'hôtel"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[54.6012, 24.4699], [54.6016, 24.4703], [54.6018, 24.4701], [54.6014, 24.4697], [54.6012, 24.4699]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Red Bull Ring",
+        "zone_name": "Turn 2",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Montée rapide avec peu de dégagement"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[14.7645, 47.2197], [14.7649, 47.2201], [14.7651, 47.2199], [14.7647, 47.2195], [14.7645, 47.2197]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Paul Ricard",
+        "zone_name": "Signes",
+        "risk_level": "high",
+        "accidents_count": 1,
+        "description": "Virage très rapide"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[5.7916, 43.2506], [5.7920, 43.2510], [5.7922, 43.2508], [5.7918, 43.2504], [5.7916, 43.2506]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "circuit": "Americas",
+        "zone_name": "Turn 1",
+        "risk_level": "medium",
+        "accidents_count": 0,
+        "description": "Montée abrupte avec virage serré"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-97.6411, 30.1328], [-97.6415, 30.1332], [-97.6417, 30.1330], [-97.6413, 30.1326], [-97.6411, 30.1328]]]
+      }
+    }
+  ]
+}
