@@ -29,7 +29,8 @@ function loadCountry(locationData, countriesData,selectedRisk) {
     let countCo = 0;
 
     if(selectedRisk === "all"){
-        const countryNames = [...new Set(locationData.features.map(feature => feature.properties.id.slice(0,2)).sort())];
+        const countryNames = [...new Set(locationData.features.map(feature =>
+            feature.properties.id.slice(0,2)).sort())];
         countryNames.forEach(country => {
             countCo++;
             const option = document.createElement("option");
@@ -37,30 +38,30 @@ function loadCountry(locationData, countriesData,selectedRisk) {
             option.textContent = countriesData[country.toUpperCase()];
             select.appendChild(option);
         })
-        const countryCo = document.getElementById("countryCo");
-        countryCo.textContent ="Choisir un pays (" + countCo + ")";
     }
     else{
         //list of track who have same value with "selectedRisk"
         let listCountry = {};
+
         for(let k in listTrackstat) {
-            if(listTrackstat[k] === selectedRisk){
+            if(listTrackstat[k] == selectedRisk){
                 listCountry[k] = listTrackstat[k];
             }
         }
+        console.log(listTrackstat);
         for(let k in listCountry) {
             const countryK = locationData.features.find(feature =>
                 feature.properties.name === k);
             countCo++;
+            console.log("countryK :",countryK);
             const option = document.createElement("option");
             option.value = countryK.properties.id.slice(0,2).toUpperCase();
             option.textContent = countriesData[countryK.properties.id.slice(0,2).toUpperCase()];
             select.appendChild(option);
         }
-        const countryCo = document.getElementById("countryCo");
-        countryCo.textContent ="Choisir un pays (" + countCo + ")";
     }
-
+    const countryCo = document.getElementById("countryCo");
+    countryCo.textContent ="Choisir un pays (" + countCo + ")";
 }
 
 function loadTrack(locationData) {
@@ -627,16 +628,16 @@ window.onload = async () => {
         //
         trackMapLayer(trackData,accidentsData, risksData);
 
-            // ================================= //
-            //* ====== Statistic section ====== *//
-            // ================================= //
+        // ================================= //
+        //* ====== Statistic section ====== *//
+        // ================================= //
 
         //list of every track with there number of accident
         listTrackstat = statistics(accidentsData, trackData);
 
-            // ================================ //
-            //* ====== Selector section ====== *//
-            // ================================ //
+        // ================================ //
+        //* ====== Selector section ====== *//
+        // ================================ //
 
         //Load all country prefix from locationData and the name from countriesData
         loadCountry(locationData, countriesData,selectedRisk);
@@ -687,7 +688,7 @@ window.onload = async () => {
 
     }
     catch (error) {
-    console.error("Error loading GeoJSON data:", error);
-    alert("Error loading map data. Please try again later");
+        console.error("Error loading GeoJSON data:", error);
+        alert("Error loading map data. Please try again later");
     }
 };
